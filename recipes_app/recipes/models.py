@@ -12,4 +12,4 @@ class Recipe(models.Model):
     filters = models.CharField(max_length=300)
 
     def __str__(self):
-        return f"{self.title} serves {self.portions}"
+        return f"{self.title}"

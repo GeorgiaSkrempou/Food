@@ -1,26 +1,30 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, CreateView, ListView
 from django.urls import reverse_lazy
 
 
-from .forms import NewRecipeForm
-
+from .models import Recipe
 # Create your views here.
+
+
+class HomeView(TemplateView):
+    template_name = 'recipes/home.html'
 
 
 class ThankYouView(TemplateView):
     template_name = 'recipes/thank_you.html'
 
 
-class RecipeFormView(FormView):
+class RecipeCreateView(CreateView):
     # attribute names must be named like this
-    form_class = NewRecipeForm
-    template_name = 'recipes/new_recipe.html'
-
+    model = Recipe
+    # the form details are automatically saved like this
+    fields = '__all__'
     #  success url? # it's the url not the template!
     success_url = reverse_lazy('recipes:thank_you')
 
-    #  what to do with form?
-    def form_valid(self, form):
-        print(form.cleaned_data)
-        return super().form_valid(form)
+
+# This lists every instance of the teacher
+# model_list.hmtl
+class RecipeListView(ListView):
+    model = Recipe
