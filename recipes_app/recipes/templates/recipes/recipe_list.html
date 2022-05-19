@@ -1,7 +1,7 @@
 <h1>LIST ALL RECIPES</h1>
 
 <ul>
-    {% for recipe in object_list %}
-    <li>{{recipe.title}}</li>
+    {% for recipe in recipe_list %}
+    <li><a href="/recipes/detail_recipe/{{recipe.id}}/">{{recipe.title}}</a></li>
     {% endfor %}
 </ul>
