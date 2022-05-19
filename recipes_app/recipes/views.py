@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView
 from django.urls import reverse_lazy
 
 
@@ -27,4 +26,12 @@ class RecipeCreateView(CreateView):
 # This lists every instance of the teacher
 # model_list.hmtl
 class RecipeListView(ListView):
+    model = Recipe
+    #  change the query done by django to something more custom
+    queryset = Recipe.objects.order_by('title')
+    #  replaces the object_list with recipe_list
+    context_object_name = 'recipe_list'
+
+
+class RecipeDetailView(DetailView):
     model = Recipe
