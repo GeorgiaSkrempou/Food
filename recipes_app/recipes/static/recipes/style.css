@@ -51,9 +51,17 @@
 
 /* mouse over link */
 a:hover {
-    color: red;
+    color: blue;
 }
 
 ul.nav a span:hover {
     color: #878787 !important;
+}
+
+.content {
+    background-color: #dcdcdc;
+}
+
+.recipe-list a {
+    text-decoration: none;
 }

@@ -1,7 +1,10 @@
 {% extends 'recipes/base.html' %}
 
+{% block content_title %}
+    <h4>{{ recipe.title }}</h4>
+{% endblock %}
+
 {% block content %}
-<h1>{{recipe.title}}</h1>
 <ul>
     <li>Serves: {{recipe.portions}}</li>
     <li>Ingredients: {{recipe.ingredients}}</li>

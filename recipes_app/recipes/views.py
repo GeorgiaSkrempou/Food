@@ -1,7 +1,9 @@
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from .models import Recipe
+
+
 # Create your views here.
 
 
@@ -39,8 +41,18 @@ class RecipeDetailView(DetailView):
 class RecipeUpdateView(UpdateView):
     model = Recipe
     fields = "__all__"
+
     # success_url = reverse_lazy('recipes:detail_recipe', args = [recipe.id])
 
     def get_success_url(self):
-           pk = self.kwargs["pk"]
-           return reverse("recipes:detail_recipe", kwargs={"pk": pk})
+        pk = self.kwargs["pk"]
+        return reverse("recipes:detail_recipe", kwargs={"pk": pk})
+
+
+class RecipeDeleteView(DeleteView):
+    model = Recipe
+
+    # success_url = reverse_lazy("recipes:list_recipe")
+
+    def get_success_url(self):
+        return reverse("recipes:list_recipe")
