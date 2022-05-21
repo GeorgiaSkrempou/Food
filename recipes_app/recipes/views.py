@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 from django.urls import reverse_lazy
 
 
@@ -35,3 +35,9 @@ class RecipeListView(ListView):
 
 class RecipeDetailView(DetailView):
     model = Recipe
+
+
+class RecipeUpdateView(UpdateView):
+    model = Recipe
+    fields = "__all__"
+    success_url = reverse_lazy('recipes:detail_recipe')
