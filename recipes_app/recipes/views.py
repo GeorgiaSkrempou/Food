@@ -21,7 +21,7 @@ class RecipeCreateView(CreateView):
     # the form details are automatically saved like this
     fields = '__all__'
     #  success url? # it's the url not the template!
-    success_url = reverse_lazy('recipes:thank_you')
+    success_url = reverse_lazy('recipes:list_recipe')
 
 
 # This lists every instance of the teacher

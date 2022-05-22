@@ -1,13 +1,14 @@
 {% extends 'recipes/base.html' %}
-
+{% block content_title %}
+    <h4>Recipes</h4>
+{% endblock %}
 {% block content %}
 
     <table class="table table-hover recipe-list">
         <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th scope="col">Recipe</th>
+            <th class="text-end" scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -15,19 +16,10 @@
         {% for recipe in recipe_list %}
             <tr>
                 <td><a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a></td>
-                <td><a href="{% url 'recipes:update_recipe' recipe.id %}"><i class="bi bi-pencil-square"></i></a></td>
-                <td><a href="{% url 'recipes:delete_recipe' recipe.id %}"><i class="bi bi-trash-fill"></i></a></td>
+                <td class="text-end"><a href="{% url 'recipes:update_recipe' recipe.id %}"><i class="bi bi-pencil-square"></i></a><a
+                        href="{% url 'recipes:delete_recipe' recipe.id %}"><i class="bi bi-trash-fill"></i></a></td>
             </tr>
 
-
-            {#        <ul class="list-group list-group-horizontal">#}
-            {#  <li class="list-group-item"><a href="{% url 'recipes:update_recipe' recipe.id %}"><i class="bi bi-pencil-square"></i></a></li>#}
-            {#  <li class="list-group-item"><a href="{% url 'recipes:detail_recipe' recipe.id %}"><button type="i" class="" aria-current="true">{{ recipe.title }}</button></a></li>#}
-            {#  <li class="list-group-item">A third item</li>#}
-            {#</ul>#}
-
-
-            {#            </li>#}
         {% endfor %}
         </tbody>
     </table>
