@@ -5,10 +5,26 @@
 {% endblock %}
 
 {% block content %}
-<ul>
-    <li>Serves: {{recipe.portions}}</li>
-    <li>Ingredients: {{recipe.ingredients}}</li>
-    <li>Steps: {{recipe.steps}}</li>
-</ul>
+    <table class="table">
+
+        <tbody>
+        <tr>
+            <th scope="row">Portions</th>
+            <td>{{ recipe.portions }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Ingredients</th>
+            <td>{{ recipe.ingredients }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Steps</th>
+            <td colspan="2">{{ recipe.steps }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Tags</th>
+            <td colspan="2">{{ recipe.filters }}</td>
+        </tr>
+        </tbody>
+    </table>
 
 {% endblock %}
