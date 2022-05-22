@@ -16,10 +16,40 @@
         {% for recipe in recipe_list %}
             <tr>
                 <td><a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a></td>
-                <td class="text-end"><a href="{% url 'recipes:update_recipe' recipe.id %}"><i class="bi bi-pencil-square"></i></a><a
-                        href="{% url 'recipes:delete_recipe' recipe.id %}"><i class="bi bi-trash-fill"></i></a></td>
-            </tr>
+                <td class="text-end">
+                    <a href="{% url 'recipes:update_recipe' recipe.id %}"><i class="bi bi-pencil-square"></i></a>
+                    <!-- Button trigger modal -->
 
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                </td>
+            </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Recipe</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                            </button>
+                            <form action="{% url 'recipes:delete_recipe' recipe.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
         </tbody>
     </table>
