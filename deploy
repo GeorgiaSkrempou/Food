@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ssh server /root/update_recipes.sh
