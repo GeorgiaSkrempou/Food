@@ -1,6 +1,9 @@
 {% extends 'recipes/base.html' %}
 {% block content_title %}
-    <h4>Recipes</h4>
+    <div class="d-flex justify-content-between">
+        <h4>Recipes</h4>
+        <a href="{% url 'recipes:add_recipe' %}"><i class="bi bi-plus-square"></i></a>
+    </div>
 {% endblock %}
 {% block content %}
 

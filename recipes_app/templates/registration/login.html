@@ -1,0 +1,30 @@
+{% extends 'recipes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content_title %}
+    <h4>Login</h4>
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>Your username or password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>You don't have permission to access this page</p>
+        {% else %}
+            <p>You need to be logged in to access this page</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form|crispy}}
+        <input class="btn btn-outline-secondary" type="submit" value="Login">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+{% endblock %}
