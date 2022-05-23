@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Recipe
 
@@ -15,7 +16,7 @@ class ThankYouView(TemplateView):
     template_name = 'recipes/thank_you.html'
 
 
-class RecipeCreateView(CreateView):
+class RecipeCreateView(LoginRequiredMixin, CreateView):
     # attribute names must be named like this
     model = Recipe
     # the form details are automatically saved like this
@@ -26,7 +27,7 @@ class RecipeCreateView(CreateView):
 
 # This lists every instance of the teacher
 # model_list.hmtl
-class RecipeListView(ListView):
+class RecipeListView(LoginRequiredMixin, ListView):
     model = Recipe
     #  change the query done by django to something more custom
     queryset = Recipe.objects.order_by('title')
@@ -34,11 +35,11 @@ class RecipeListView(ListView):
     context_object_name = 'recipe_list'
 
 
-class RecipeDetailView(DetailView):
+class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
 
 
-class RecipeUpdateView(UpdateView):
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     fields = "__all__"
 
@@ -49,7 +50,7 @@ class RecipeUpdateView(UpdateView):
         return reverse("recipes:detail_recipe", kwargs={"pk": pk})
 
 
-class RecipeDeleteView(DeleteView):
+class RecipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipe
 
     # success_url = reverse_lazy("recipes:list_recipe")

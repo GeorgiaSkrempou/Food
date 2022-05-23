@@ -9,20 +9,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Add new recipe</h5>
-            <p class="card-text">Add new recipes to your inventory</p>
-            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Add new recipe</a>
-        </div>
-    </div>
 
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Add new recipe</h5>
-            <p class="card-text">Add new recipes to your inventory</p>
-            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Add new recipe</a>
+
+    {% if user.is_authenticated %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Hello, {{ user.get_username }}!</h5>
+                <p class="card-text">Add new recipes to your inventory</p>
+                <a href="{% url 'recipes:add_recipe' %}" class="btn btn-outline-secondary">Add new recipe</a>
+            </div>
         </div>
-    </div>
+    {% else %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Hello!</h5>
+                <p class="card-text">You are not logged in</p>
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-outline-secondary">Login</a>
+            </div>
+        </div>
+
+    {% endif %}
 
 {% endblock %}
