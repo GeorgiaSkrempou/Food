@@ -1,6 +1,28 @@
 {% extends 'recipes/base.html' %}
 
+
+{% block content_title %}
+    <span class="ms-2 fs-4 me-2">Welcome to</span>
+    <i class="bi bi-bug-fill"></i>
+    <span class="ms-2 fs-4 me-2">Food</span>
+    <i class="bi bi-bug-fill"></i>
+{% endblock %}
+
 {% block content %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Add new recipe</h5>
+            <p class="card-text">Add new recipes to your inventory</p>
+            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Add new recipe</a>
+        </div>
+    </div>
 
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Add new recipe</h5>
+            <p class="card-text">Add new recipes to your inventory</p>
+            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Add new recipe</a>
+        </div>
+    </div>
 
-{% endblock%}
+{% endblock %}
