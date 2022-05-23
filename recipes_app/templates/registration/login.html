@@ -1,0 +1,31 @@
+{% extends 'recipes/base.html' %}
+
+{% block content_title %}
+    <h4>Login</h4>
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>You don't have permission to access this page</p>
+        {% else %}
+            <p>Please log in</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {#    {{ form.username.label_tag }}#}
+        {#    {{ form.username }}#}
+        {{ form }}
+        {{ form.email }}
+        <input type="submit" value="Login">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+{% endblock %}
