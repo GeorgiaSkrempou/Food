@@ -29,7 +29,7 @@ SECRET_KEY = os.environ['DJANGO_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['recipes.sbs.lol']
+ALLOWED_HOSTS = ['recipes.sbs.lol', '127.0.0.1']
 
 
 # Application definition
