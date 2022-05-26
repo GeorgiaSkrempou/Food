@@ -17,8 +17,8 @@ class Recipe(models.Model):
 
 
 class RecipeInstance(models.Model):
-    recipe = models.ForeignKey('Recipe', on_delete=models.RESTRICT, null=True)
-    recipe_user = models.ManyToManyField(User, null=True, blank=True)
+    recipe = models.ForeignKey('Recipe', on_delete=models.RESTRICT)
+    recipe_user = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
         return f"{self.recipe}"
