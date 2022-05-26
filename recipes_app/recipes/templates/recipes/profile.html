@@ -1,0 +1,12 @@
+{% extends 'recipes/base.html' %}
+
+{% block content_title %}
+    <h4>{{ user }}'s recipes</h4>
+{% endblock %}
+
+{% block content %}
+    {% for recipe_instance in recipeinstance_list %}
+        <a href="{% url 'recipes:detail_recipe' recipe_instance.recipe.id %}">{{ recipe_instance.recipe.title }}</a>
+    {% endfor %}
+{% endblock %}
+
