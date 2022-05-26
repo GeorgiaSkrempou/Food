@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Profile Page</h1>
+    {% for recipe_instance in recipeinstance_list %}
+        <a href="{% url 'recipes:detail_recipe' recipe_instance.recipe.id %}">{{ recipe_instance.recipe.title }}</a>
+    {% endfor %}
 {% endblock %}
 
