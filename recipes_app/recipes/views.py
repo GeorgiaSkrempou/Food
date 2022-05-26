@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from .forms import UserRegisterForm
-from .models import Recipe
+from .models import Recipe, RecipeInstance
 
 
 # Create your views here.
@@ -65,3 +65,12 @@ class SignUpView(CreateView):
 
     success_url = reverse_lazy('login')
     template_name = 'recipes/signup.html'
+
+
+class UserRecipesView(LoginRequiredMixin, ListView):
+    model = RecipeInstance
+    template_name = 'recipes/profile.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return RecipeInstance.objects.filter(recipe_user=self.request.user).all()
