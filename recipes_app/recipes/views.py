@@ -1,7 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
+from .forms import UserRegisterForm
 from .models import Recipe
 
 
@@ -57,3 +58,10 @@ class RecipeDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("recipes:list_recipe")
+
+
+class SignUpView(CreateView):
+    form_class = UserRegisterForm
+
+    success_url = reverse_lazy('login')
+    template_name = 'recipes/signup.html'

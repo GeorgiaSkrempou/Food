@@ -23,11 +23,13 @@
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">Hello!</h5>
-                <p class="card-text">You are not logged in</p>
+                <p class="card-text">You are not logged in.</p>
+                <p>Login or sign up here.</p>
                 <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-outline-secondary">Login</a>
+                <a href="{% url 'recipes:signup' %}?next={{ request.path }}" class="btn btn-outline-secondary">Sign
+                    up</a>
             </div>
         </div>
-
     {% endif %}
 
 {% endblock %}
