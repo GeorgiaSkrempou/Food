@@ -5,6 +5,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Recipe(models.Model):
     title = models.CharField(max_length=300)
     portions = models.IntegerField(validators=[MinValueValidator(limit_value=1)])
@@ -16,5 +17,3 @@ class Recipe(models.Model):
 
     def __str__(self):
         return f"{self.title}"
-
-
