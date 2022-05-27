@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 from .forms import UserRegisterForm
 from .models import Recipe
@@ -80,6 +81,7 @@ class UserRecipesView(LoginRequiredMixin, ListView):
 
 @login_required
 def add_recipe_to_account(request, pk):
+
     if request.POST:
         user = request.user
         recipe = Recipe.objects.get(pk=pk)
@@ -88,5 +90,16 @@ def add_recipe_to_account(request, pk):
         # new_user_recipe = RecipeInstance.objects.create(recipe_id=pk)
         # new_user_recipe.recipe_user.add(request.user)
         # new_user_recipe.save()
+        messages.success(request, "Recipe added successfully")
+
+        return HttpResponseRedirect(reverse('recipes:list_recipe'))
+
+
+def delete_recipe_from_account(request, pk):
+    if request.POST:
+        recipe = Recipe.objects.get(pk=pk)
+        user = request.user
+        user.recipes.remove(recipe)
+        messages.success(request, "Recipe deleted successfully")
 
         return HttpResponseRedirect(reverse('recipes:profile'))

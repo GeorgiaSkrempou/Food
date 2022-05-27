@@ -39,13 +39,22 @@
                     <span class="ms-2 fs-4">Home</span>
                 </a>
             </li>
-            <li>
-                <a href="{% url 'recipes:list_recipe' %}" class="nav-link link-dark d-inline-flex">
-                    {#                    <img src="{% static 'recipes/cook-book.png' %}" width="30" height="30" alt="my_image">#}
-                    <i class="bi bi-journal-richtext"></i>
-                    <span class="ms-2 fs-4">Recipes</span>
-                </a>
-            </li>
+            {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'recipes:list_recipe' %}" class="nav-link link-dark d-inline-flex">
+                        {#                    <img src="{% static 'recipes/cook-book.png' %}" width="30" height="30" alt="my_image">#}
+                        <i class="bi bi-journal-richtext"></i>
+                        <span class="ms-2 fs-4">Recipes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'recipes:profile' %}" class="nav-link link-dark d-inline-flex">
+                        {#                    <img src="{% static 'recipes/cook-book.png' %}" width="30" height="30" alt="my_image">#}
+                        <i class="bi bi-person-lines-fill"></i>
+                        <span class="ms-2 fs-4">My Recipes</span>
+                    </a>
+                </li>
+            {% endif %}
         </ul>
         {% if user.is_authenticated %}
             <hr>
@@ -84,7 +93,13 @@
         </div>
         <div class="card mt-5 ms-5">
             <div class="card-body p-4">
+                {% if messages %}
+                        {% for message in messages %}
+                            <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                        {% endfor %}
+                {% endif %}
                 {% block content %}
+
                 {% endblock %}
             </div>
         </div>
