@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.http import HttpResponseRedirect
 
 from .forms import UserRegisterForm
-from .models import Recipe, RecipeInstance
+from .models import Recipe
 
 
 # Create your views here.
@@ -68,9 +70,23 @@ class SignUpView(CreateView):
 
 
 class UserRecipesView(LoginRequiredMixin, ListView):
-    model = RecipeInstance
+    model = Recipe
     template_name = 'recipes/profile.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return RecipeInstance.objects.filter(recipe_user=self.request.user).all()
+        return Recipe.objects.filter(user=self.request.user).all()
+
+
+@login_required
+def add_recipe_to_account(request, pk):
+    if request.POST:
+        user = request.user
+        recipe = Recipe.objects.get(pk=pk)
+        user.recipes.add(recipe)
+        user.save()
+        # new_user_recipe = RecipeInstance.objects.create(recipe_id=pk)
+        # new_user_recipe.recipe_user.add(request.user)
+        # new_user_recipe.save()
+
+        return HttpResponseRedirect(reverse('recipes:profile'))
