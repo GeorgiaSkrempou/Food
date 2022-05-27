@@ -1,10 +1,9 @@
 from django.contrib import admin
 
-from .models import Recipe, RecipeInstance
+from .models import Recipe
 
 # Register your models here.
 
 
 admin.site.register(Recipe)
-admin.site.register(RecipeInstance)
 

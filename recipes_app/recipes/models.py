@@ -12,13 +12,9 @@ class Recipe(models.Model):
     steps = models.TextField()
     filters = models.CharField(max_length=300)
 
+    user = models.ManyToManyField(User, related_name='recipes', blank=True)
+
     def __str__(self):
         return f"{self.title}"
 
 
-class RecipeInstance(models.Model):
-    recipe = models.ForeignKey('Recipe', on_delete=models.RESTRICT)
-    recipe_user = models.ManyToManyField(User, blank=True)
-
-    def __str__(self):
-        return f"{self.recipe}"

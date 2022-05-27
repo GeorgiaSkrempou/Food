@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    {% for recipe_instance in recipeinstance_list %}
-        <a href="{% url 'recipes:detail_recipe' recipe_instance.recipe.id %}">{{ recipe_instance.recipe.title }}</a>
+    {% for recipe in recipe_list %}
+        <a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a>
     {% endfor %}
 {% endblock %}
 
