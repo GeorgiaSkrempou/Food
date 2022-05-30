@@ -65,3 +65,11 @@ ul.nav a span:hover {
 .recipe-list a {
     text-decoration: none;
 }
+
+#pretty-table form {
+    display: inline-block;
+}
+
+#pretty-table th[data-column-id="action"] {
+    width: 20% !important;
+}

@@ -1,11 +1,12 @@
 {% extends 'recipes/base.html' %}
+{% load static %}
 
 {% block content_title %}
     <h4>{{ recipe.title }}</h4>
 {% endblock %}
 
 {% block content %}
-    <table class="table">
+    <table class="table" id="recipe-list">
 
         <tbody>
         <tr>
@@ -26,5 +27,10 @@
         </tr>
         </tbody>
     </table>
+<div id="pretty-table"></div>
+{% endblock %}
 
+{% block javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+    <script src="{% static 'recipes/app.js' %}"></script>
 {% endblock %}
