@@ -12,6 +12,7 @@
         <thead>
         <tr>
             <th scope="col">Recipe</th>
+            <th scope="col">Description</th>
             <th class="text-end" scope="col">Action</th>
         </tr>
         </thead>
@@ -21,6 +22,9 @@
             <tr>
                 <td>
                     <a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a>
+                </td>
+                <td>
+                    {{ recipe.description }}
                 </td>
                 <td class="text-end">
                     <form action="{% url 'recipes:add_recipe_to_account' recipe.id %}" method="POST">

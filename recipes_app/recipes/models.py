@@ -8,6 +8,7 @@ from django.db import models
 
 class Recipe(models.Model):
     title = models.CharField(max_length=300)
+    description = models.CharField(max_length=200, default="", blank=False)
     portions = models.IntegerField(validators=[MinValueValidator(limit_value=1)])
     ingredients = models.CharField(max_length=300)
     steps = models.TextField()
