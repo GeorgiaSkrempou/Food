@@ -1,9 +1,8 @@
-from django.contrib.auth.views import PasswordResetConfirmView
 from django.urls import path
 
-from .views import (SignUpView, AccountPasswordResetView, AccountLoginView,AccountLogoutView,
+from .views import (SignUpView, AccountPasswordResetView, AccountLoginView, AccountLogoutView, ProfileView,
                     AccountPasswordResetConfirmView, AccountPasswordResetDoneView, AccountPasswordResetCompleteView,
-                    AccountPasswordChangeView, AccountPasswordChangeDoneView)
+                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView)
 
 app_name = "user"
 
@@ -12,6 +11,10 @@ urlpatterns = [
 
     path("login/", AccountLoginView.as_view(template_name='user/login.html'), name="login"),
     path('logout/', AccountLogoutView.as_view(), name="logout"),
+
+    path("update_user/<int:pk>", UserUpdateView.as_view(), name="update_user"),
+
+    path('profile/', ProfileView.as_view(template_name='user/profile.html'), name="profile"),
 
     path("password_reset/", AccountPasswordResetView.as_view(template_name='user/password_reset_form.html'),
          name="password_reset"),

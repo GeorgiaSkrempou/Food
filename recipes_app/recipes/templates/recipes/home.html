@@ -15,13 +15,7 @@
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">Hello, {{ user.username }}!</h5>
-                <img src="/static/recipes/static_cdn/default_profile_image.png" alt="" width="100" height="100"
-                     class="rounded-circle me-2">
                 <p class="card-text">Explore our recipes collection!</p>
-
-                <a href="{% url 'user:password_change' %}" class="link-primary">Change Password</a>
-
-
             </div>
         </div>
     {% else %}
@@ -29,8 +23,8 @@
             <div class="card-body">
                 <h5 class="card-title">Hello!</h5>
                 <p class="card-text">You are not logged in.</p>
-                <p><a href="{% url 'user:login' %}?next={{ request.path }}" class="link-primary">Log in</a> or <a
-                        href="{% url 'user:signup' %}?next={{ request.path }}" class="link-primary">Sign up</a></p>
+                <p><a href="{% url 'user:login' %}" class="link-primary">Log in</a> or <a
+                        href="{% url 'user:signup' %}" class="link-primary">Sign up</a></p>
             </div>
         </div>
     {% endif %}

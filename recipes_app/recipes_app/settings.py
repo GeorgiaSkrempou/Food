@@ -135,3 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = ['https://recipes.sbs.lol']
 
 LOGIN_REDIRECT_URL = 'recipes:home'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'recipes_app/media/')
+MEDIA_URL = '/media/'
+print(BASE_DIR)
+

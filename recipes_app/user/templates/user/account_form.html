@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content_title %}
+    <h4>Edit Profile</h4>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form|crispy }}
+        <input class="btn btn-outline-secondary" type="submit" value="SUBMIT">
+    </form>
+
+{% endblock %}
