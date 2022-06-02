@@ -4,6 +4,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.views import (PasswordResetView, PasswordResetCompleteView, PasswordChangeView,
+                                       PasswordResetConfirmView, PasswordChangeDoneView)
 
 from .forms import UserRegisterForm
 from .models import Recipe
@@ -47,8 +49,6 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     fields = "__all__"
 
-    # success_url = reverse_lazy('recipes:detail_recipe', args = [recipe.id])
-
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse("recipes:detail_recipe", kwargs={"pk": pk})
@@ -56,8 +56,6 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
 
 class RecipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipe
-
-    # success_url = reverse_lazy("recipes:list_recipe")
 
     def get_success_url(self):
         return reverse("recipes:list_recipe")
@@ -81,15 +79,12 @@ class UserRecipesView(LoginRequiredMixin, ListView):
 
 @login_required
 def add_recipe_to_account(request, pk):
-
     if request.POST:
         user = request.user
         recipe = Recipe.objects.get(pk=pk)
         user.recipes.add(recipe)
         user.save()
-        # new_user_recipe = RecipeInstance.objects.create(recipe_id=pk)
-        # new_user_recipe.recipe_user.add(request.user)
-        # new_user_recipe.save()
+
         messages.success(request, "Recipe added successfully")
 
         return HttpResponseRedirect(reverse('recipes:list_recipe'))
@@ -103,3 +98,23 @@ def delete_recipe_from_account(request, pk):
         messages.success(request, "Recipe deleted successfully")
 
         return HttpResponseRedirect(reverse('recipes:profile'))
+
+
+class AccountPasswordResetView(PasswordResetView):
+    pass
+
+
+class AccountPasswordResetDoneView(PasswordResetCompleteView):
+    pass
+
+
+class AccountPasswordResetConfirmView(PasswordResetConfirmView):
+    pass
+
+
+class AccountPasswordChangeView(PasswordChangeView):
+    pass
+
+
+class AccountPasswordChangeDoneView(PasswordChangeDoneView):
+    pass

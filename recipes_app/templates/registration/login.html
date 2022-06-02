@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content_title %}
-    <h4>Login</h4>
+    <h4>Log in</h4>
 {% endblock %}
 
 {% block content %}
@@ -26,5 +26,7 @@
         <input class="btn btn-outline-secondary" type="submit" value="Login">
         <input type="hidden" name="next" value="{{ next }}">
     </form>
+
+    <div>Forgot your password? Reset <a href="{% url 'password_reset' %}">here</a>.</div>
 
 {% endblock %}

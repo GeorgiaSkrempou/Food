@@ -10,8 +10,7 @@
     {% if not recipe_list %}
         <h6>
             No recipes exist yet. You can add a new recipe
-            <a href="{% url 'recipes:add_recipe' %}">here</a>
-            .
+            <a href="{% url 'recipes:add_recipe' %}">here</a>.
         </h6>
     {% else %}
         <table class="table table-hover recipe-list" id="recipe-list">
