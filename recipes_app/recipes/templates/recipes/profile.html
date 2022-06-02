@@ -7,60 +7,68 @@
 
 {% block content %}
 
+    {% if not recipe_list %}
+        <h6>
+            You currently don't have any recipes saved in your account. You can add recipes from the
+            <a href="{% url 'recipes:list_recipe' %}">recipe list</a>
+            .
+        </h6>
+    {% else %}
 
-    <table class="table table-hover recipe-list" id="recipe-list">
-        <thead>
-        <tr>
-            <th scope="col">Recipe</th>
-            <th scope="col">Description</th>
-            <th class="text-end" scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for recipe in recipe_list %}
+        <table class="table table-hover recipe-list" id="recipe-list">
+            <thead>
             <tr>
-                <td>
-                    <a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a>
-                </td>
-                <td>
-                    {{ recipe.description }}
-                </td>
-                <td class="text-end">
-                    <!-- Button trigger modal -->
-
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="bi bi-trash-fill"></i>
-                    </a>
-                </td>
+                <th scope="col">Recipe</th>
+                <th scope="col">Description</th>
+                <th class="text-end" scope="col">Action</th>
             </tr>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Delete Recipe</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
-                            </button>
-                            <form action="{% url 'recipes:delete_recipe_from_account' recipe.id %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+            </thead>
+            <tbody>
+            {% for recipe in recipe_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a>
+                    </td>
+                    <td>
+                        {{ recipe.description }}
+                    </td>
+                    <td class="text-end">
+                        <!-- Button trigger modal -->
+
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Recipe</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                </button>
+                                <form action="{% url 'recipes:delete_recipe_from_account' recipe.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
 
-        </tbody>
-    </table>
-<div id="pretty-table"></div>
+            </tbody>
+        </table>
+        <div id="pretty-table"></div>
+    {% endif %}
 {% endblock %}
 
 {% block javascript %}

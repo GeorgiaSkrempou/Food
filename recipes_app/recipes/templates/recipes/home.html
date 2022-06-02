@@ -14,7 +14,7 @@
     {% if user.is_authenticated %}
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">Hello, {{ user.get_username }}!</h5>
+                <h5 class="card-title">Hello, {{ user.username }}!</h5>
                 <p class="card-text">Add new recipes to the inventory</p>
                 <a href="{% url 'recipes:add_recipe' %}" class="btn btn-outline-secondary">Add new recipe</a>
             </div>
