@@ -15,8 +15,13 @@
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">Hello, {{ user.username }}!</h5>
-                <p class="card-text">Add new recipes to the inventory</p>
-                <a href="{% url 'recipes:add_recipe' %}" class="btn btn-outline-secondary">Add new recipe</a>
+                <img src="/static/recipes/static_cdn/default_profile_image.png" alt="" width="100" height="100"
+                     class="rounded-circle me-2">
+                <p class="card-text">Explore our recipes collection!</p>
+
+                <a href="{% url 'password_change' %}" class="link-primary">Change Password</a>
+
+
             </div>
         </div>
     {% else %}
@@ -24,10 +29,8 @@
             <div class="card-body">
                 <h5 class="card-title">Hello!</h5>
                 <p class="card-text">You are not logged in.</p>
-                <p>Login or sign up here.</p>
-                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-outline-secondary">Login</a>
-                <a href="{% url 'recipes:signup' %}?next={{ request.path }}" class="btn btn-outline-secondary">Sign
-                    up</a>
+                <p><a href="{% url 'login' %}?next={{ request.path }}" class="link-primary">Log in</a> or <a
+                        href="{% url 'recipes:signup' %}?next={{ request.path }}" class="link-primary">Sign up</a></p>
             </div>
         </div>
     {% endif %}

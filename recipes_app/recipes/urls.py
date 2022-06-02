@@ -16,5 +16,6 @@ urlpatterns = [
     path("signup/", SignUpView.as_view(), name="signup"),
     path("profile/", UserRecipesView.as_view(), name='profile'),
     path("add_recipe_to_account/<int:pk>", add_recipe_to_account, name="add_recipe_to_account"),
-    path("delete_recipe_from_account/<int:pk>", delete_recipe_from_account, name="delete_recipe_from_account")
+    path("delete_recipe_from_account/<int:pk>", delete_recipe_from_account, name="delete_recipe_from_account"),
+
 ]
