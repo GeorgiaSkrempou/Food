@@ -4,10 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.contrib.auth.views import (PasswordResetView, PasswordResetCompleteView, PasswordChangeView,
-                                       PasswordResetConfirmView, PasswordChangeDoneView)
 
-from .forms import UserRegisterForm
 from .models import Recipe
 
 
@@ -16,10 +13,6 @@ from .models import Recipe
 
 class HomeView(TemplateView):
     template_name = 'recipes/home.html'
-
-
-class ThankYouView(TemplateView):
-    template_name = 'recipes/thank_you.html'
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
@@ -61,13 +54,6 @@ class RecipeDeleteView(LoginRequiredMixin, DeleteView):
         return reverse("recipes:list_recipe")
 
 
-class SignUpView(CreateView):
-    form_class = UserRegisterForm
-
-    success_url = reverse_lazy('login')
-    template_name = 'recipes/signup.html'
-
-
 class UserRecipesView(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = 'recipes/profile.html'
@@ -99,22 +85,3 @@ def delete_recipe_from_account(request, pk):
 
         return HttpResponseRedirect(reverse('recipes:profile'))
 
-
-class AccountPasswordResetView(PasswordResetView):
-    pass
-
-
-class AccountPasswordResetDoneView(PasswordResetCompleteView):
-    pass
-
-
-class AccountPasswordResetConfirmView(PasswordResetConfirmView):
-    pass
-
-
-class AccountPasswordChangeView(PasswordChangeView):
-    pass
-
-
-class AccountPasswordChangeDoneView(PasswordChangeDoneView):
-    pass

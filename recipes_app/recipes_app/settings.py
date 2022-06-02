@@ -31,9 +31,9 @@ DEBUG = True
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # development ONLY
 
-ALLOWED_HOSTS = ['recipes.sbs.lol', '127.0.0.1']
+ALLOWED_HOSTS = ['recipes.sbs.lol', '127.0.0.1', 'localhost']
 
-AUTH_USER_MODEL = 'recipes.Account'
+AUTH_USER_MODEL = 'user.Account'
 
 # Application definition
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'recipes.apps.RecipesConfig',
+    'user.apps.UserConfig',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
