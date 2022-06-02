@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 
-from .models import Account
+from .models import Account, Recipe
 
 
 class UserRegisterForm(UserCreationForm):
@@ -11,3 +11,7 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = Account
         fields = ['username', 'email', 'password1', 'password2']
+
+
+
+
