@@ -31,6 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['recipes.sbs.lol', '127.0.0.1']
 
+AUTH_USER_MODEL = 'recipes.Account'
 
 # Application definition
 
