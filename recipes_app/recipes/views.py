@@ -24,7 +24,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
     # attribute names must be named like this
     model = Recipe
     # the form details are automatically saved like this
-    fields = '__all__'
+    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters']
     #  success url? # it's the url not the template!
     success_url = reverse_lazy('recipes:list_recipe')
 
