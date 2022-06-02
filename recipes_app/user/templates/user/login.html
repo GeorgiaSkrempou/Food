@@ -7,22 +7,24 @@
 
 {% block content %}
 
-    {% if form.errors %}
-        <p>Your username or password didn't match. Please try again.</p>
-    {% endif %}
-
-    {% if next %}
+        {% if next %}
         {% if user.is_authenticated %}
-            <p>You don't have permission to access this page</p>
+            <div class="alert alert-danger" role="alert">
+                You don't have permission to access this page.
+            </div>
+
         {% else %}
-            <p>You need to be logged in to access this page</p>
+            <div class="alert alert-danger" role="alert">
+                You need to be logged in to access this page.
+            </div>
+
         {% endif %}
     {% endif %}
 
     <form method="POST">
         {% csrf_token %}
 
-        {{ form|crispy}}
+        {{ form|crispy }}
         <input class="btn btn-outline-secondary" type="submit" value="Login">
         <input type="hidden" name="next" value="{{ next }}">
     </form>

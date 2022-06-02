@@ -1,10 +1,15 @@
+from django.contrib import messages
 from django.contrib.auth.views import (PasswordResetView, PasswordResetCompleteView, PasswordChangeView,
                                        PasswordResetConfirmView, PasswordChangeDoneView, LoginView, LogoutView,
                                        TemplateView)
+from django.http import request
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import UserRegisterForm
+from .models import Account
 
 
 # Create your views here.
@@ -24,11 +29,20 @@ class SignUpView(CreateView):
     template_name = 'user/signup.html'
 
 
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Account
+    success_url = reverse_lazy('user:profile')
+    fields = ['username', 'profile_image', 'hide_email']
+    success_message = "Profile updated."
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    pass
+
+
 class AccountPasswordResetView(PasswordResetView):
     email_template_name = "user/password_reset_email.html"
-    # subject_template_name = "user/password_reset_subject.txt"
     success_url = reverse_lazy("user:password_reset_done")
-    # template_name = "user/password_reset_form.html"
 
 
 class AccountPasswordResetDoneView(TemplateView):
@@ -43,9 +57,12 @@ class AccountPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = reverse_lazy("user:password_reset_complete")
 
 
-class AccountPasswordChangeView(PasswordChangeView):
+class AccountPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     success_url = reverse_lazy("user:password_change_done")
 
 
-class AccountPasswordChangeDoneView(PasswordChangeDoneView):
+class AccountPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     pass
+
+
+
