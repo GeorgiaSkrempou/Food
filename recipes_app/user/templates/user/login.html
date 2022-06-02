@@ -1,4 +1,4 @@
-{% extends 'recipes/base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
 {% block content_title %}
@@ -27,6 +27,6 @@
         <input type="hidden" name="next" value="{{ next }}">
     </form>
 
-    <div>Forgot your password? Reset <a href="{% url 'password_reset' %}">here</a>.</div>
+    <div>Forgot your password? Reset <a href="{% url 'user:password_reset' %}">here</a>.</div>
 
 {% endblock %}
