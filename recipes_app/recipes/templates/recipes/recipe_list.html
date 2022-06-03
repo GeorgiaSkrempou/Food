@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content_title %}
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" title="Add new recipe">
         <h4>Recipes</h4>
         <a href="{% url 'recipes:add_recipe' %}"><i class="bi bi-plus-square"></i></a>
     </div>
@@ -18,6 +18,8 @@
             <tr>
                 <th scope="col">Recipe</th>
                 <th scope="col">Description</th>
+                <th scope="col">Tags</th>
+
                 <th class="text-end" scope="col">Action</th>
             </tr>
             </thead>
@@ -26,21 +28,27 @@
             {% for recipe in recipe_list %}
                 <tr>
                     <td>
-                        <a href="{% url 'recipes:detail_recipe' recipe.id %}" data-toggle="tooltip" title="See recipe details">{{ recipe.title }}</a>
+                        <a href="{% url 'recipes:detail_recipe' recipe.id %}"
+                           title="See recipe details">{{ recipe.title }}</a>
                     </td>
                     <td>
                         {{ recipe.description }}
                     </td>
+                    <td>
+                        {{ recipe.filters }}
+                    </td>
                     <td class="text-end">
                         <form action="{% url 'recipes:add_recipe_to_account' recipe.id %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-link p-0 pb-2" data-toggle="tooltip" data-placement="top" title="Add to my recipes"><i class="bi bi-bookmark-plus"></i></button>
+                            <button type="submit" class="btn btn-link p-0 pb-2" title="Add to my recipes"><i
+                                    class="bi bi-bookmark-plus"></i></button>
                         </form>
-                        <a href="{% url 'recipes:update_recipe' recipe.id %}" data-toggle="tooltip" title="Edit recipe"><i class="bi bi-pencil-square"></i></a>
+                        <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe"><i
+                                class="bi bi-pencil-square"></i></a>
 
                         <!-- Button trigger modal -->
 
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-toggle="tooltip" title="Delete recipe">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Delete recipe">
                             <i class="bi bi-trash-fill"></i>
                         </a>
                     </td>

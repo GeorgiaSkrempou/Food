@@ -2,11 +2,13 @@ import random
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from datetime import datetime, timedelta
+import pytz
 
 from .models import Recipe
 
@@ -50,20 +52,40 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("recipes:detail_recipe", kwargs={"pk": pk})
 
 
-class RecipeDeleteView(LoginRequiredMixin, DeleteView):
+class RecipeDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Recipe
 
     def get_success_url(self):
         return reverse("recipes:list_recipe")
 
+    success_message = "Recipe deleted successfully"
+
 
 class UserRecipesView(LoginRequiredMixin, ListView):
     model = Recipe
-    template_name = 'recipes/profile.html'
+    template_name = 'recipes/user_recipes.html'
     paginate_by = 10
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserRecipesView, self).get_context_data(*args, **kwargs)
+        context["random_recipe"] = self.get_random_recipe()
+        return context
 
     def get_queryset(self):
         return Recipe.objects.filter(user=self.request.user).all()
+
+    def get_random_recipe(self):
+        current_date = datetime.now(pytz.timezone('Europe/Amsterdam'))
+        # tomorrow = current_date + timedelta(days=5)
+        num_date_time = int(current_date.strftime('%d%m%Y'))
+        recipes_list = Recipe.objects.filter(user=self.request.user).all()
+        random.seed(num_date_time)
+        if not recipes_list:
+            return None
+
+        random_recipe = random.choice(recipes_list)
+
+        return random_recipe
 
 
 @login_required
@@ -86,16 +108,4 @@ def delete_recipe_from_account(request, pk):
         user.recipes.remove(recipe)
         messages.success(request, "Recipe deleted successfully")
 
-        return HttpResponseRedirect(reverse('recipes:profile'))
-
-
-def random_recipe_view(request):
-    current_date = datetime.now()
-
-    num_date_time = int(current_date.strftime('%d%m%Y'))
-    recipes_list = request.user.recipes.all()
-
-    random.seed(num_date_time)
-    random_recipe = random.choice(recipes_list)
-
-    return HttpResponse(random_recipe)
+        return HttpResponseRedirect(reverse('recipes:user_recipes'))

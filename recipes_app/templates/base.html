@@ -51,12 +51,7 @@
                         <span class="ms-2 fs-4">My Recipes</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{% url 'recipes:random_recipe' %}" class="nav-link link-dark d-inline-flex">
-                        <i class="bi bi-question-diamond"></i>
-                        <span class="ms-2 fs-4">Random Recipe</span>
-                    </a>
-                </li>
+
             {% endif %}
         </ul>
         {% if user.is_authenticated %}
@@ -74,10 +69,8 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        {% if user.is_authenticated %}
                             <a class="dropdown-item" href="{% url 'user:logout' %}">Log out</a>
 
-                        {% endif %}
                     </li>
                 </ul>
             </div>

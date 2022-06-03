@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block content_title %}
     <h4>{{ user }}'s recipes</h4>
 {% endblock %}
 
 {% block content %}
+
+
 
     {% if not recipe_list %}
         <h6>
@@ -14,12 +17,23 @@
             .
         </h6>
     {% else %}
+        <div class="mt-1 ms-10">
+            <div class="card">
+                <div class="card-body">
+
+                    Random recipe of the day: <a
+                        href="{% url 'recipes:detail_recipe' random_recipe.id %}"> {{ random_recipe.title }}</a>
+                </div>
+            </div>
+        </div>
 
         <table class="table table-hover recipe-list" id="recipe-list">
             <thead>
             <tr>
                 <th scope="col">Recipe</th>
                 <th scope="col">Description</th>
+                <th scope="col">Tags</th>
+
                 <th class="text-end" scope="col">Action</th>
             </tr>
             </thead>
@@ -31,6 +45,9 @@
                     </td>
                     <td>
                         {{ recipe.description }}
+                    </td>
+                    <td>
+                        {{ recipe.filters }}
                     </td>
                     <td class="text-end">
                         <!-- Button trigger modal -->
@@ -67,9 +84,13 @@
 
             </tbody>
         </table>
+
         <div id="pretty-table"></div>
+
     {% endif %}
+
 {% endblock %}
+
 
 {% block javascript %}
     <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
