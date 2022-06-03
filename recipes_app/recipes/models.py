@@ -18,5 +18,5 @@ class Recipe(models.Model):
 
     user = models.ManyToManyField(Account, related_name='recipes', blank=True)
 
-    def __str__(self):
+   def __str__(self):
         return f"{self.title}"

@@ -3,7 +3,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from .views import (RecipeCreateView, RecipeListView, HomeView, RecipeDetailView, RecipeUpdateView,
-                    RecipeDeleteView, UserRecipesView, add_recipe_to_account, delete_recipe_from_account)
+                    RecipeDeleteView, UserRecipesView, add_recipe_to_account, delete_recipe_from_account,
+                    random_recipe_view)
 
 app_name = "recipes"
 
@@ -17,4 +18,5 @@ urlpatterns = [
     path("user_recipes/", UserRecipesView.as_view(), name='user_recipes'),
     path("add_recipe_to_account/<int:pk>", add_recipe_to_account, name="add_recipe_to_account"),
     path("delete_recipe_from_account/<int:pk>", delete_recipe_from_account, name="delete_recipe_from_account"),
+    path("random_recipe/", random_recipe_view, name="random_recipe")
 ]
