@@ -1,9 +1,12 @@
+import random
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
+from datetime import datetime, timedelta
 
 from .models import Recipe
 
@@ -85,3 +88,14 @@ def delete_recipe_from_account(request, pk):
 
         return HttpResponseRedirect(reverse('recipes:profile'))
 
+
+def random_recipe_view(request):
+    current_date = datetime.now()
+
+    num_date_time = int(current_date.strftime('%d%m%Y'))
+    recipes_list = request.user.recipes.all()
+
+    random.seed(num_date_time)
+    random_recipe = random.choice(recipes_list)
+
+    return HttpResponse(random_recipe)
