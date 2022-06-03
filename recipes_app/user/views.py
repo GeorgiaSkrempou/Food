@@ -33,7 +33,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Account
     success_url = reverse_lazy('user:profile')
     fields = ['username', 'profile_image']
-    success_message = "Profile updated."
+    success_message = "Profile updated"
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
