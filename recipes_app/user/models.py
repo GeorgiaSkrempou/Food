@@ -1,5 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
+from PIL import Image
+
 
 # Create your models here.
 
@@ -33,16 +35,7 @@ class MyAccountManager(BaseUserManager):
         return user
 
 
-def get_profile_image_filepath(self):
-    return f"profile_images/{self.pk}/{'profile_image.png'}"
-
-
-def get_default_profile_image():
-    return "static/recipes/static_cdn/default_profile_image.png"
-
-
 class Account(AbstractBaseUser):
-
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
@@ -51,8 +44,6 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    # profile_image = models.ImageField(max_length=255, upload_to='profile_images', null=True, blank=True,
-    #                                   default='default.png')
 
     objects = MyAccountManager()
 
@@ -62,9 +53,6 @@ class Account(AbstractBaseUser):
     def __str__(self):
         return self.username
 
-    def get_profile_image_filename(self):
-        return str(self.profile_image)[str(self.profile_image).index(f'profile_images/{self.pk}/'):]
-
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
@@ -73,10 +61,19 @@ class Account(AbstractBaseUser):
 
 
 class Avatar(models.Model):
-
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
 
     avatar = models.ImageField(default='default.png', upload_to='profile_images')
+
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
 
     def __str__(self):
         return self.user.username
