@@ -2,13 +2,14 @@ from django.contrib import messages
 from django.contrib.auth.views import (PasswordResetView, PasswordResetCompleteView, PasswordChangeView,
                                        PasswordResetConfirmView, PasswordChangeDoneView, LoginView, LogoutView,
                                        TemplateView)
-from django.http import request
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UpdateAvatarForm
 from .models import Account
 
 
@@ -31,9 +32,26 @@ class SignUpView(CreateView):
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Account
+    # form_class = UserProfileEditForm
     success_url = reverse_lazy('user:profile')
-    fields = ['username', 'profile_image']
+    fields = ['username']
     success_message = "Profile updated"
+    # template_name_suffix = '_update_form'
+
+
+def avatar(request):
+    if request.method == "POST":
+        avatar_form = UpdateAvatarForm(request.POST, request.FILES, instance=request.user.avatar)
+
+        if avatar_form.is_valid():
+            avatar_form.save()
+            messages.success(request, "Profile image updated successfully")
+            return HttpResponseRedirect(reverse('user:profile'))
+
+    else:
+        avatar_form = UpdateAvatarForm(instance=request.user.avatar)
+
+    return render(request, 'user/change_avatar.html', context={'avatar_form': avatar_form})
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -63,6 +81,3 @@ class AccountPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 class AccountPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     pass
-
-
-

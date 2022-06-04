@@ -1,8 +1,10 @@
+from django.conf.urls.static import static
 from django.urls import path
 
 from .views import (SignUpView, AccountPasswordResetView, AccountLoginView, AccountLogoutView, ProfileView,
                     AccountPasswordResetConfirmView, AccountPasswordResetDoneView, AccountPasswordResetCompleteView,
-                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView)
+                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView, avatar)
+from django.conf import settings
 
 app_name = "user"
 
@@ -15,6 +17,7 @@ urlpatterns = [
     path("update_user/<int:pk>", UserUpdateView.as_view(), name="update_user"),
 
     path('profile/', ProfileView.as_view(template_name='user/profile.html'), name="profile"),
+    path('change_avatar/', avatar, name='change_avatar'),
 
     path("password_reset/", AccountPasswordResetView.as_view(template_name='user/password_reset_form.html'),
          name="password_reset"),
@@ -32,3 +35,6 @@ urlpatterns = [
          name="password_change_done")
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
