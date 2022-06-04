@@ -42,6 +42,7 @@ def get_default_profile_image():
 
 
 class Account(AbstractBaseUser):
+
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
@@ -50,8 +51,8 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    profile_image = models.ImageField(max_length=255, upload_to=get_profile_image_filepath, null=True, blank=True,
-                                      default='')
+    # profile_image = models.ImageField(max_length=255, upload_to='profile_images', null=True, blank=True,
+    #                                   default='default.png')
 
     objects = MyAccountManager()
 
@@ -70,3 +71,12 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+
+class Avatar(models.Model):
+
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
+
+    avatar = models.ImageField(default='default.png', upload_to='profile_images')
+
+    def __str__(self):
+        return self.user.username

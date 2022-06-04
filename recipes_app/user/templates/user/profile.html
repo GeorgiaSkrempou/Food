@@ -12,13 +12,16 @@
             <div class="d-flex flex-column justify-content-center p-4">
                 <h5 class="card-title mx-auto">Hello, {{ user.username }}!</h5>
                 <div class="mx-auto mb-4 p-3">
-                <img src="/media/profile_images/default.png" alt="" width="150" height="150"
-                     class="rounded-circle img-fluid d-block border border-dark mx-auto">
-                <p class="mt-4 mb-1"><h6><a href="{% url 'user:password_change' %}" class="link-primary">Change
-                Password</a></h6></p>
-                    <p class="mt-4 mb-1"><h6><a href="{% url 'user:update_user' user.id %} " class="link-primary">Update user</a></h6></p>
-            </div>
+                    <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt="" width="150" height="150"
+                         class="rounded-circle img-fluid d-block border border-dark mx-auto">
+
+                    <p class="mt-4 mb-1"><h6><a href="{% url 'user:password_change' %}" class="link-primary">Change
+                    Password</a></h6></p>
+                    <p class="mt-4 mb-1"><h6><a href="{% url 'user:update_user' user.id %} " class="link-primary">Change
+                    Username</a></h6></p>
+                    <p class="mt-4 mb-1"><h6><a href="{% url 'user:change_avatar' %} " class="link-primary">Change Avatar</a></h6></p>
                 </div>
+            </div>
         </div>
     </div>
 {% endblock %}
