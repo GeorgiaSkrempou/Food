@@ -24,7 +24,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
     # attribute names must be named like this
     model = Recipe
     # the form details are automatically saved like this
-    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters']
+    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters', 'image']
     #  success url? # it's the url not the template!
     success_url = reverse_lazy('recipes:list_recipe')
 
@@ -45,7 +45,7 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 
 class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
-    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters']
+    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters', 'image']
 
     def get_success_url(self):
         pk = self.kwargs["pk"]
@@ -105,6 +105,7 @@ def add_recipe_to_account(request, pk):
         return HttpResponseRedirect(reverse('recipes:list_recipe'))
 
 
+@login_required
 def delete_recipe_from_account(request, pk):
     if request.POST:
         recipe = Recipe.objects.get(pk=pk)
