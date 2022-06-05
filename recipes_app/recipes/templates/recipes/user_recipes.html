@@ -93,10 +93,9 @@
     {% if not recipe_list %}
         <div class="card-body mt-4 p-4 shadow">
 
-                Random recipe of the day: To get a random recipe suggestion, add recipes to your account from the
-                <a href="{% url 'recipes:list_recipe' %}">recipe list</a>
-                .
-
+            Random recipe of the day: To get a random recipe suggestion, add recipes to your account from the
+            <a href="{% url 'recipes:list_recipe' %}">recipe list</a>
+            .
 
             {% else %}
 
@@ -110,8 +109,10 @@
 
 
 {% block javascript %}
-    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-    <script src="{% static 'recipes/app.js' %}"></script>
+    {% if recipe_list %}
+        <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+        <script src="{% static 'recipes/app.js' %}"></script>
+    {% endif %}
 {% endblock %}
 
 
