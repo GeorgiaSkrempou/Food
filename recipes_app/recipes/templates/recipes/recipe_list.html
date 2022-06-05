@@ -43,7 +43,8 @@
                         {{ recipe.filters }}
                     </td>
                     <td class="text-end">
-                        <form action="{% url 'recipes:add_recipe_to_account' recipe.id %}" method="POST">
+                        <form action="{% url 'recipes:add_recipe_to_account' recipe.id %}" method="POST"
+                              class="d-inline-block">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-link p-0"
                                     title="Add to my recipes">
@@ -62,8 +63,7 @@
                                  stroke-linejoin="round">
                                 <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
                                 <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                            </svg>
-                        </a>
+                            </svg></a>
 
                         <!-- Button trigger modal -->
 
