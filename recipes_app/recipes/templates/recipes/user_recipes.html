@@ -88,13 +88,23 @@
 
 {% endblock %}
 
+
 {% block random_recipe %}
+    {% if not recipe_list %}
+        <div class="card-body mt-4 p-4 shadow">
 
-    <div class="card-body mt-4 p-4 shadow">
-        Random recipe of the day: <a
-            href="{% url 'recipes:detail_recipe' random_recipe.id %}"> {{ random_recipe.title }}</a>
-    </div>
+                Random recipe of the day: To get a random recipe suggestion, add recipes to your account from the
+                <a href="{% url 'recipes:list_recipe' %}">recipe list</a>
+                .
 
+
+            {% else %}
+
+            Random recipe of the day: <a
+                href="{% url 'recipes:detail_recipe' random_recipe.id %}"> {{ random_recipe.title }}</a>
+        </div>
+
+    {% endif %}
 
 {% endblock %}
 
