@@ -3,15 +3,27 @@
 
 {% block content_title %}
     <h4>{{ recipe.title }}</h4>
+
+
 {% endblock %}
+
+{% block recipe_description %}
+
+    <div class="card-body mt-4 p-4 shadow">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2">
+            <h6>{{ recipe.description }}</h6>
+
+
+        </div>
+    </div>
+{% endblock %}
+
 
 {% block content %}
 
 
     <img src="{{ MEDIA_URL }}{{ recipe.image }}" alt="" class=" img-fluid d-block border border-dark mx-auto">
-
-
-
+    <hr>
 
     <table class="table" id="recipe-list">
 
@@ -40,6 +52,9 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-    <script src="{% static 'recipes/app.js' %}"></script>
+    {% if  recipe_list %}
+
+        <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+        <script src="{% static 'recipes/app.js' %}"></script>
+    {% endif %}
 {% endblock %}
