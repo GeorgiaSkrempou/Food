@@ -4,4 +4,5 @@ db.sqlite3
 .idea
 __pycache__
 *.pyc
-media
+recipes_app/media/profile_images
+!recipes_app/media/profile_images/.gitkeep
