@@ -45,7 +45,7 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 
 class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
-    fields = "__all__"
+    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters']
 
     def get_success_url(self):
         pk = self.kwargs["pk"]

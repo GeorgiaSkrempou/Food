@@ -6,11 +6,14 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
 
+    <form method="POST">
+
+        {% csrf_token %}
         {{ form|crispy }}
         <input class="btn btn-outline-secondary" type="submit" value="SUBMIT">
+
     </form>
 
 {% endblock %}
+
