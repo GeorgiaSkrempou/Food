@@ -6,3 +6,5 @@ __pycache__
 *.pyc
 recipes_app/media/profile_images
 !recipes_app/media/profile_images/.gitkeep
+recipes_app/media/recipe_images
+!recipes_app/media/recipe_images/.gitkeep

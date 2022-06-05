@@ -6,6 +6,13 @@
 {% endblock %}
 
 {% block content %}
+
+
+    <img src="{{ MEDIA_URL }}{{ recipe.image }}" alt="" class=" img-fluid d-block border border-dark mx-auto">
+
+
+
+
     <table class="table" id="recipe-list">
 
         <tbody>
@@ -25,9 +32,11 @@
             <th scope="row">Tags</th>
             <td colspan="2">{{ recipe.filters }}</td>
         </tr>
+
+
         </tbody>
     </table>
-<div id="pretty-table"></div>
+    <div id="pretty-table"></div>
 {% endblock %}
 
 {% block javascript %}
