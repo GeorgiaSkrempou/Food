@@ -17,5 +17,4 @@ urlpatterns = [
     path("user_recipes/", UserRecipesView.as_view(), name='user_recipes'),
     path("add_recipe_to_account/<int:pk>", add_recipe_to_account, name="add_recipe_to_account"),
     path("delete_recipe_from_account/<int:pk>", delete_recipe_from_account, name="delete_recipe_from_account"),
-    # path("random_recipe/", random_recipe_view, name="random_recipe")
 ]
