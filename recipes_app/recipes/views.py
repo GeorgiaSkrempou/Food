@@ -93,10 +93,14 @@ def add_recipe_to_account(request, pk):
     if request.POST:
         user = request.user
         recipe = Recipe.objects.get(pk=pk)
-        user.recipes.add(recipe)
-        user.save()
 
-        messages.success(request, "Recipe added successfully")
+        if not user.recipes.filter(id=recipe.id):
+            user.recipes.add(recipe)
+            user.save()
+
+            messages.success(request, "Recipe added successfully")
+        else:
+            messages.warning(request, "Recipe already in your account")
 
         return HttpResponseRedirect(reverse('recipes:list_recipe'))
 
