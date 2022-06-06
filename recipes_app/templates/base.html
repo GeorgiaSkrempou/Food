@@ -44,7 +44,7 @@
                         <li class="nav-item">
                             <a href="{% url 'recipes:home' %}"
                                class="nav-link {% if url_name == 'home' %}active{% endif %} align-middle pe-2 ps-2">
-                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                                <i class="fs-4 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
                         {% if user.is_authenticated %}
@@ -52,15 +52,16 @@
                             <li>
                                 <a href="{% url 'recipes:list_recipe' %}"
                                    class="nav-link {% if url_name == 'list_recipe' %}active{% endif %} align-middle pe-2 ps-2">
-                                    <i class="fs-4 bi-table"></i><span
+                                    <i class="fs-4 bi-grid"></i><span
                                         class="ms-1 d-none d-sm-inline">Recipes</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{% url 'recipes:user_recipes' %}"
                                    class="nav-link {% if url_name == 'user_recipes' %}active {% endif %} pe-2 ps-2 align-middle">
-                                   <i class="fs-4 bi-cart4"></i> <span
-                                        class="ms-1 d-none d-sm-inline">My Recipes</span></a>
+                                   <i class="fs-4 bi-cart4"></i><span
+                                        class="ms-1 d-none d-sm-inline">My Recipes</span>
+                                </a>
                             </li>
                             </ul>
 
