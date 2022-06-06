@@ -70,8 +70,8 @@ class Avatar(models.Model):
 
         img = Image.open(self.avatar.path)
 
-        if img.height > 100 or img.width > 100:
-            new_img = (100, 100)
+        if img.height > 500 or img.width > 500:
+            new_img = (500, 500)
             img.thumbnail(new_img)
             img.save(self.avatar.path)
 
