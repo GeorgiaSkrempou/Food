@@ -2,20 +2,13 @@
 {% load static %}
 
 {% block content_title %}
-    <h4>{{ recipe.title }}</h4>
-
+    <h3>{{ recipe.title }}</h3>
 
 {% endblock %}
 
 {% block recipe_description %}
-
-    <div class="card-body mt-4 p-4 shadow">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2">
-            <h6>{{ recipe.description }}</h6>
-
-
-        </div>
-    </div>
+    <p class="lead" >{{ recipe.description }}</p>
+    <hr>
 {% endblock %}
 
 
@@ -44,8 +37,6 @@
             <th scope="row">Tags</th>
             <td colspan="2">{{ recipe.filters }}</td>
         </tr>
-
-
         </tbody>
     </table>
     <div id="pretty-table"></div>
@@ -53,7 +44,6 @@
 
 {% block javascript %}
     {% if  recipe_list %}
-
         <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
         <script src="{% static 'recipes/app.js' %}"></script>
     {% endif %}

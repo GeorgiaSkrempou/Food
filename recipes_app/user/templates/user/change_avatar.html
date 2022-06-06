@@ -3,14 +3,12 @@
 {% load crispy_forms_tags %}
 
 {% block content_title %}
-    <h4>Edit Avatar</h4>
+    <h4>Edit profile picture</h4>
 {% endblock %}
 
 {% block content %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-
-
         {{ avatar_form | crispy }}
         <input class="btn btn-outline-secondary" type="submit" value="SUBMIT">
     </form>
