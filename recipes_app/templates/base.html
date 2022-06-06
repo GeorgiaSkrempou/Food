@@ -68,7 +68,7 @@
                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt="" width="28" height="28"
                                  class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
+                            <span class="d-none d-sm-inline ms-3">{{ user.username }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="col d-flex flex-column h-100">
-            <main class="row">
+            <main class="row pb-4 px-4">
                 <div class="col pt-4">
                     {% block content_title %}
                     {% endblock %}
@@ -112,7 +112,7 @@
 
             </main>
             <footer class="row bg-light py-4 mt-auto">
-                <div class="col"> Bottom footer content here...</div>
+                <div class="col">Georgia Skrempou | Alex Raileanu</div>
             </footer>
         </div>
     </div>

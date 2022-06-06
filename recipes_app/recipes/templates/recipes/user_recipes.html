@@ -68,12 +68,13 @@
                                 Are you sure you want to delete?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
-                                </button>
                                 <form action="{% url 'recipes:delete_recipe_from_account' recipe.id %}" method="POST">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
+                                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel
+                                </button>
+
                             </div>
                         </div>
                     </div>
