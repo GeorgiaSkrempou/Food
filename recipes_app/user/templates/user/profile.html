@@ -11,12 +11,12 @@
         <div class="card-body">
             <div class="d-flex flex-column justify-content-center p-4">
                 <h5 class="card-title mx-auto">Hello, {{ user.username }}!</h5>
-                <div class="mx-auto mb-4 p-3">
+                <div class="mx-auto mb-4 pt-5">
                     <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt=""
                          class="rounded-circle img-fluid d-block border border-dark mx-auto">
 
 
-                    <div class="accordion p-3" id="accordionExample">
+                    <div class="accordion pt-4" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -27,26 +27,16 @@
                             <div id="collapseOne" class="accordion-collapse collapse collapse"
                                  aria-labelledby="headingOne"
                                  data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p class="mt-4 mb-1"><h6><a href="{% url 'user:password_change' %}"
-                                                                class="link-primary">Change
-                                    Password</a></h6></p>
-                                    <p class="mt-4 mb-1"><h6><a href="{% url 'user:update_user' user.id %} "
-                                                                class="link-primary">Change
-                                    Username</a></h6></p>
-                                    <p class="mt-4 mb-1"><h6><a href="{% url 'user:change_avatar' %} "
-                                                                class="link-primary">Change
-                                    Avatar</a></h6></p>
-
+                                <div class="list-group">
+                                    <a href="{% url 'user:password_change' %}"
+                                       class="list-group-item list-group-item-action">Change password</a>
+                                    <a href="{% url 'user:update_user' user.id %}"
+                                       class="list-group-item list-group-item-action">Change username</a>
+                                    <a href="{% url 'user:change_avatar' %}"
+                                       class="list-group-item list-group-item-action">Change profile picture</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-            </div>
-        </div>
-    </div>
-    </div>
 {% endblock %}
