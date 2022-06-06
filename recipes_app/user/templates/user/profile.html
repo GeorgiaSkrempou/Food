@@ -2,41 +2,41 @@
 
 {% block content_title %}
 
-    <h4>My Profile</h4>
+    <h3>My Profile</h3>
 
 {% endblock %}
 
 {% block content %}
-    <div class="card" style="width: 25rem;">
-        <div class="card-body">
-            <div class="d-flex flex-column justify-content-center p-4">
-                <h5 class="card-title mx-auto">Hello, {{ user.username }}!</h5>
-                <div class="mx-auto mb-4 pt-5">
-                    <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt=""
-                         class="rounded-circle img-fluid d-block border border-dark mx-auto">
+
+    <div class="d-flex flex-column justify-content-center p-4">
+        <h5 class="card-title mx-auto">Hello, {{ user.username }}!</h5>
+        <div class="mx-auto mb-4 pt-5">
+            <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt=""
+                 class="rounded-circle img-fluid d-block border border-dark mx-auto">
 
 
-                    <div class="accordion pt-4" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Edit profile information
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse collapse"
-                                 aria-labelledby="headingOne"
-                                 data-bs-parent="#accordionExample">
-                                <div class="list-group">
-                                    <a href="{% url 'user:password_change' %}"
-                                       class="list-group-item list-group-item-action">Change password</a>
-                                    <a href="{% url 'user:update_user' user.id %}"
-                                       class="list-group-item list-group-item-action">Change username</a>
-                                    <a href="{% url 'user:change_avatar' %}"
-                                       class="list-group-item list-group-item-action">Change profile picture</a>
-                                </div>
-                            </div>
+            <div class="accordion pt-4" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Edit profile information
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse collapse"
+                         aria-labelledby="headingOne"
+                         data-bs-parent="#accordionExample">
+                        <div class="list-group">
+                            <a href="{% url 'user:password_change' %}"
+                               class="list-group-item list-group-item-action">Change password</a>
+                            <a href="{% url 'user:update_user' user.id %}"
+                               class="list-group-item list-group-item-action">Change username</a>
+                            <a href="{% url 'user:change_avatar' %}"
+                               class="list-group-item list-group-item-action">Change profile picture</a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
