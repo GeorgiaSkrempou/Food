@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <th scope="row">Ingredients</th>
-            <td>{{ recipe.ingredients }}</td>
+            <td>{{ recipe.ingredients | safe }}</td>
         </tr>
         <tr>
             <th scope="row">Steps</th>
