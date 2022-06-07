@@ -12,7 +12,7 @@
         <h5 class="card-title mx-auto">Hello, {{ user.username }}!</h5>
         <div class="mx-auto mb-4 pt-5">
             {% if user.avatar %}
-                <img src="{{ MEDIA_URL }}{{ user.avatar }}" alt="" width="150" height="150"
+                <img src="{{ MEDIA_URL }}{{ user.avatar }}" alt="" width="250" height="250"
                                  class="rounded-circle border">
             {% else %}
                 <img src="{{ MEDIA_URL }}default.jpg" alt="" width="250" height="250"
