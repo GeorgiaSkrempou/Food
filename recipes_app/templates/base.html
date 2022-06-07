@@ -68,10 +68,10 @@
                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                            {% if user.avatar %}
                             <img src="{{ MEDIA_URL }}{{ user.avatar }}" alt="" width="28" height="28"
-                                 class="rounded-circle">
+                                 class="rounded-circle border">
                             {% else %}
-                                <img src="{{ MEDIA_URL }}default.png" alt="" width="28" height="28"
-                                class="rounded-circle">
+                                <img src="{{ MEDIA_URL }}default.jpg" alt="" width="28" height="28"
+                                class="rounded-circle border">
                             {% endif %}
  
                             <span class="d-none d-sm-inline ms-3">{{ user.username }}</span>
