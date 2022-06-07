@@ -45,6 +45,7 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     avatar = models.ImageField(default='default.png', upload_to='profile_images', blank=True)
+    
 
     def save_image(self, *args, **kwargs):
         super().save()
