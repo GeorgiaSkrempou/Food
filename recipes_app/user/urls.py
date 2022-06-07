@@ -3,7 +3,7 @@ from django.urls import path
 
 from .views import (SignUpView, AccountPasswordResetView, AccountLoginView, AccountLogoutView, ProfileView,
                     AccountPasswordResetConfirmView, AccountPasswordResetDoneView, AccountPasswordResetCompleteView,
-                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView, avatar)
+                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView)
 from django.conf import settings
 
 app_name = "user"
@@ -14,10 +14,9 @@ urlpatterns = [
     path("login/", AccountLoginView.as_view(template_name='user/login.html'), name="login"),
     path('logout/', AccountLogoutView.as_view(), name="logout"),
 
-    path("update_user/<int:pk>", UserUpdateView.as_view(), name="update_user"),
+    path("update_user/", UserUpdateView.as_view(), name="update_user"),
 
     path('profile/', ProfileView.as_view(template_name='user/profile.html'), name="profile"),
-    path('change_avatar/', avatar, name='change_avatar'),
 
     path("password_reset/", AccountPasswordResetView.as_view(template_name='user/password_reset_form.html'),
          name="password_reset"),

@@ -44,6 +44,17 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    avatar = models.ImageField(default='default.png', upload_to='profile_images')
+
+    def save_image(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 500 or img.width > 500:
+            new_img = (500, 500)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
 
     objects = MyAccountManager()
 
@@ -60,20 +71,20 @@ class Account(AbstractBaseUser):
         return True
 
 
-class Avatar(models.Model):
-    user = models.OneToOneField(Account, on_delete=models.CASCADE)
-
-    avatar = models.ImageField(default='default.png', upload_to='profile_images')
-
-    def save(self, *args, **kwargs):
-        super().save()
-
-        img = Image.open(self.avatar.path)
-
-        if img.height > 500 or img.width > 500:
-            new_img = (500, 500)
-            img.thumbnail(new_img)
-            img.save(self.avatar.path)
-
-    def __str__(self):
-        return self.user.username
+# class Avatar(models.Model):
+#     user = models.OneToOneField(Account, on_delete=models.CASCADE)
+#
+#     avatar = models.ImageField(default='default.png', upload_to='profile_images')
+#
+#     def save(self, *args, **kwargs):
+#         super().save()
+#
+#         img = Image.open(self.avatar.path)
+#
+#         if img.height > 500 or img.width > 500:
+#             new_img = (500, 500)
+#             img.thumbnail(new_img)
+#             img.save(self.avatar.path)
+#
+#     def __str__(self):
+#         return self.user.username
