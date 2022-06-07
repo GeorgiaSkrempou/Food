@@ -14,8 +14,11 @@
 
 {% block content %}
 
-
-    <img src="{{ MEDIA_URL }}{{ recipe.image }}" alt="" class=" img-fluid d-block border border-dark mx-auto">
+    {% if recipe.image %}
+        <img src="{{ MEDIA_URL }}{{ recipe.image }}" alt="" class=" img-fluid d-block border border-dark mx-auto">
+    {% else %}
+        <img src="{{ MEDIA_URL }}recipe_default.jpg" alt="" class=" img-fluid d-block border border-dark mx-auto">
+    {% endif %}
     <hr>
 
     <table class="table" id="recipe-list">
