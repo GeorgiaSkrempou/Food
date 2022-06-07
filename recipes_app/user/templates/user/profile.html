@@ -11,7 +11,7 @@
     <div class="d-flex flex-column justify-content-center p-4">
         <h5 class="card-title mx-auto">Hello, {{ user.username }}!</h5>
         <div class="mx-auto mb-4 pt-5">
-            <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt=""
+            <img src="{{ MEDIA_URL }}{{ user.avatar }}" alt=""
                  class="rounded-circle img-fluid d-block border border-dark mx-auto">
 
 
@@ -29,10 +29,8 @@
                         <div class="list-group">
                             <a href="{% url 'user:password_change' %}"
                                class="list-group-item list-group-item-action">Change password</a>
-                            <a href="{% url 'user:update_user' user.id %}"
-                               class="list-group-item list-group-item-action">Change username</a>
-                            <a href="{% url 'user:change_avatar' %}"
-                               class="list-group-item list-group-item-action">Change profile picture</a>
+                            <a href="{% url 'user:update_user' %}"
+                               class="list-group-item list-group-item-action">Change user info</a>
                         </div>
                     </div>
                 </div>
