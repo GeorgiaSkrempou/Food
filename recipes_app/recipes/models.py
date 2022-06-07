@@ -23,13 +23,15 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
+        
+        if self.image:
 
-        img = Image.open(self.image.path)
+            img = Image.open(self.image.path)
 
-        # if img.height > 800 or img.width > 800:
-        new_img = (450, 900)
-        img.thumbnail(new_img)
-        img.save(self.image.path)
+            # if img.height > 800 or img.width > 800:
+            new_img = (450, 900)
+            img.thumbnail(new_img)
+            img.save(self.image.path)
 
     def __str__(self):
         return f"{self.title}"
