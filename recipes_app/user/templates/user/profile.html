@@ -11,9 +11,13 @@
     <div class="d-flex flex-column justify-content-center p-4">
         <h5 class="card-title mx-auto">Hello, {{ user.username }}!</h5>
         <div class="mx-auto mb-4 pt-5">
+            {% if user.avatar %}
             <img src="{{ MEDIA_URL }}{{ user.avatar }}" alt=""
                  class="rounded-circle img-fluid d-block border border-dark mx-auto">
-
+            {% else %}
+                <img src="{{ MEDIA_URL }}default.png" alt=""
+                class="rounded-circle img-fluid d-block border border-dark mx-auto">
+            {% endif %}
 
             <div class="accordion pt-4" id="accordionExample">
                 <div class="accordion-item">

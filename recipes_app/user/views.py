@@ -29,7 +29,6 @@ class SignUpView(CreateView):
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Account
-    # form_class = UserProfileEditForm
     success_url = reverse_lazy('user:profile')
     fields = ['username', 'avatar']
     success_message = "Profile updated"
