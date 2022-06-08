@@ -65,6 +65,8 @@ class RecipeDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 class UserRecipesView(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = 'recipes/user_recipes.html'
+    queryset = Recipe.objects.order_by('title')
+
     paginate_by = 10
 
     def get_context_data(self, *args, **kwargs):

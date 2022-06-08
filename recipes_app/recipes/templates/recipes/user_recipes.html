@@ -8,6 +8,30 @@
 
 {% block content %}
 
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("recipe-list");
+            tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < tr.length; i++) {
+                var tds = tr[i].getElementsByTagName("td");
+                var flag = false;
+                for (var j = 0; j < tds.length; j++) {
+                    var td = tds[j];
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        flag = true;
+                    }
+                }
+                if (flag) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 
     <div class="card shadow">
         <div class="card-body">
@@ -18,6 +42,12 @@
                     .
                 </h6>
             {% else %}
+                <div class="input-group mb-3 py-2">
+                    <span class="input-group-text search-input" id="basic-addon1">Search</span>
+                    <input type="text" class="form-control" placeholder="Search in recipes" aria-label="Username"
+                           aria-describedby="basic-addon1" id="myInput" onkeyup="myFunction()">
+                </div>
+                {#                <input class="py-2" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search...">#}
 
                 <table class="table table-hover recipe-list" id="recipe-list">
                     <thead>
@@ -29,7 +59,7 @@
 
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-group-divider">
                     {% for recipe in recipe_list %}
                         <tr>
                             <td class="priority-1 text-center">
@@ -134,12 +164,12 @@
 {% endblock %}
 
 
-{% block javascript %}
-    {% if recipe_list %}
-        <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-        <script src="{% static 'recipes/app.js' %}"></script>
-    {% endif %}
-{% endblock %}
+{#{% block javascript %}#}
+{#    {% if recipe_list %}#}
+{#        <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>#}
+{#        <script src="{% static 'recipes/app.js' %}"></script>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
 
 
 
