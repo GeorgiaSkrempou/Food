@@ -4,7 +4,7 @@ from django.urls import path
 
 from .views import (SignUpView, AccountPasswordResetView, AccountLogoutView, ProfileView,
                     AccountPasswordResetConfirmView, AccountPasswordResetDoneView, AccountPasswordResetCompleteView,
-                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView, AccountLoginView)
+                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView, AccountLoginView, activate_user)
 
 app_name = "user"
 
@@ -31,8 +31,8 @@ urlpatterns = [
     path('password_change/', AccountPasswordChangeView.as_view(template_name='user/password_change_form.html'),
          name="password_change"),
     path('password_change/done/', AccountPasswordChangeDoneView.as_view(template_name='user/password_change_done.html'),
-         name="password_change_done")
-
+         name="password_change_done"),
+    path('activate_user/<uidb64>/<token>/', activate_user, name='activate_user'),
 ]
 
 if settings.DEBUG:
