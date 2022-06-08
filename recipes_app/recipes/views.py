@@ -37,6 +37,7 @@ class RecipeListView(LoginRequiredMixin, ListView):
     queryset = Recipe.objects.order_by('title')
     #  replaces the object_list with recipe_list
     context_object_name = 'recipe_list'
+    paginate_by = 10
 
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):

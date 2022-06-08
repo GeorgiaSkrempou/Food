@@ -18,103 +18,133 @@
     </div>
 {% endblock %}
 {% block content %}
-    {% if not recipe_list %}
-        <h6>
-            No recipes exist yet. You can add a new recipe
-            <a href="{% url 'recipes:add_recipe' %}">here</a>.
-        </h6>
-    {% else %}
-        <table class="table table-hover recipe-list" id="recipe-list">
-            <thead>
-            <tr>
-                <th scope="col">Recipe</th>
-                <th scope="col">Description</th>
-                <th scope="col">Tags</th>
 
-                <th class="text-end" scope="col">Action</th>
-            </tr>
-            </thead>
-            <tbody>
+    <div class="card shadow">
+        <div class="card-body">
 
-            {% for recipe in recipe_list %}
-                <tr>
-                    <td>
-                        <a href="{% url 'recipes:detail_recipe' recipe.id %}"
-                           title="See recipe details">{{ recipe.title }}</a>
-                    </td>
-                    <td>
-                        {{ recipe.description }}
-                    </td>
-                    <td>
-                        {{ recipe.filters }}
-                    </td>
-                    <td class="text-end">
-                        <form action="{% url 'recipes:add_recipe_to_account' recipe.id %}" method="POST"
-                              class="d-inline-block">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-link p-0"
-                                    title="Add to my recipes">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                    <polyline points="7 3 7 8 15 8"></polyline>
-                                </svg>
-                            </button>
-                        </form>
-                        <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round">
-                                <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
-                                <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                            </svg></a>
+            {% if not recipe_list %}
+                <h6>
+                    No recipes exist yet. You can add a new recipe
+                    <a href="{% url 'recipes:add_recipe' %}">here</a>.
+                </h6>
+            {% else %}
+                <table class="table table-hover recipe-list" id="recipe-list">
+                    <thead>
+                    <tr>
+                        <th class="priority-1" scope="col">Recipe</th>
+                        <th class="priority-3" scope="col">Description</th>
+                        <th class="priority-3" scope="col">Tags</th>
+                        <th class="priority-1" scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
 
-                        <!-- Button trigger modal -->
-
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Delete recipe">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Recipe</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to delete?
-                            </div>
-                            <div class="modal-footer">
-                                <form action="{% url 'recipes:delete_recipe' recipe.id %}" method="POST">
+                    {% for recipe in recipe_list %}
+                        <tr>
+                            <td class="priority-1">
+                                <a href="{% url 'recipes:detail_recipe' recipe.id %}"
+                                   title="See recipe details">{{ recipe.title }}</a>
+                            </td>
+                            <td class="priority-3">
+                                {{ recipe.description }}
+                            </td>
+                            <td class="priority-3">
+                                {{ recipe.filters }}
+                            </td>
+                            <td class="priority-1">
+                                <form action="{% url 'recipes:add_recipe_to_account' recipe.id %}" method="POST"
+                                      class="d-inline-block">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-link p-0"
+                                            title="Add to my recipes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                            <polyline points="7 3 7 8 15 8"></polyline>
+                                        </svg>
+                                    </button>
                                 </form>
-                                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel
-                                </button>
 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
+                                        <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+                                    </svg></a>
+
+                                <!-- Button trigger modal -->
+
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Delete recipe">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete Recipe</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{% url 'recipes:delete_recipe' recipe.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel
+                                        </button>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div id="pretty-table"></div>
-    {% endif %}
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            {% endif %}
+            {% if is_paginated %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-link">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled btn btn-link"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <li class="active btn btn-link"><span>{{ i }} <span class="sr-only"></span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}" class="btn btn-link">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-link">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled btn btn-link"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
