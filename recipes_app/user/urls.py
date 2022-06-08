@@ -1,10 +1,10 @@
+from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from .views import (SignUpView, AccountPasswordResetView, AccountLoginView, AccountLogoutView, ProfileView,
+from .views import (SignUpView, AccountPasswordResetView, AccountLogoutView, ProfileView,
                     AccountPasswordResetConfirmView, AccountPasswordResetDoneView, AccountPasswordResetCompleteView,
-                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView)
-from django.conf import settings
+                    AccountPasswordChangeView, AccountPasswordChangeDoneView, UserUpdateView, AccountLoginView)
 
 app_name = "user"
 

@@ -23,9 +23,8 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        
-        if self.image:
 
+        if self.image:
             img = Image.open(self.image.path)
 
             # if img.height > 800 or img.width > 800:
