@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{#{% load static %}#}
 {% block content_title %}
     <div class="d-flex justify-content-between" title="Add new recipe">
         <h4>Recipes</h4>
@@ -16,8 +16,35 @@
 
         </a>
     </div>
+
+
 {% endblock %}
 {% block content %}
+
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("recipe-list");
+            tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < tr.length; i++) {
+                var tds = tr[i].getElementsByTagName("td");
+                var flag = false;
+                for (var j = 0; j < tds.length; j++) {
+                    var td = tds[j];
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        flag = true;
+                    }
+                }
+                if (flag) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 
     <div class="card shadow">
         <div class="card-body">
@@ -28,6 +55,13 @@
                     <a href="{% url 'recipes:add_recipe' %}">here</a>.
                 </h6>
             {% else %}
+                <div class="input-group mb-3 py-2">
+                    <span class="input-group-text search-input" id="basic-addon1">Search</span>
+                    <input type="text" class="form-control" placeholder="Search in recipes" aria-label="Username"
+                           aria-describedby="basic-addon1" id="myInput" onkeyup="myFunction()">
+                </div>
+{#                <input class="py-2" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search...">#}
+
                 <table class="table table-hover recipe-list" id="recipe-list">
                     <thead>
                     <tr>
@@ -68,12 +102,14 @@
                                     </button>
                                 </form>
 
-                                    <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round">
                                         <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
                                         <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                                    </svg></a>
+                                    </svg>
+                                </a>
 
                                 <!-- Button trigger modal -->
 
@@ -147,10 +183,12 @@
     </div>
 {% endblock %}
 
-{% block javascript %}
-    {% if  recipe_list %}
-        <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-        <script src="{% static 'recipes/app.js' %}"></script>
-    {% endif %}
-
-{% endblock %}
+{#{% block javascript %}#}
+{#    {% if  recipe_list %}#}
+{#        <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>#}
+{#        <script type="text/javascript" src="{{ s }}/recipes/app.js"></script>#}
+{#                <script type="text/javascript" src="{{ STATIC_URL }}app.js"></script>#}
+{##}
+{#    {% endif %}#}
+{##}
+{#{% endblock %}#}
