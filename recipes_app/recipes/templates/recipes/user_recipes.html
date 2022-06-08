@@ -22,29 +22,29 @@
                 <table class="table table-hover recipe-list" id="recipe-list">
                     <thead>
                     <tr>
-                        <th class="priority-1" scope="col">Recipe</th>
-                        <th class="priority-3" scope="col">Description</th>
-                        <th class="priority-3" scope="col">Tags</th>
-                        <th class="priority-1" scope="col">Action</th>
+                        <th class="priority-1 text-center" scope="col">Recipe</th>
+                        <th class="priority-3 text-center" scope="col">Description</th>
+                        <th class="priority-3 text-center" scope="col">Tags</th>
+                        <th class="priority-1 text-center" scope="col"></th>
 
                     </tr>
                     </thead>
                     <tbody>
                     {% for recipe in recipe_list %}
                         <tr>
-                            <td class="priority-1">
+                            <td class="priority-1 text-center">
                                 <a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a>
                             </td>
-                            <td class="priority-3">
+                            <td class="priority-3 text-center">
                                 {{ recipe.description }}
                             </td>
-                            <td class="priority-3">
+                            <td class="priority-3 text-center">
                                 {{ recipe.filters }}
                             </td>
-                            <td class="priority-1">
+                            <td class="priority-1 text-end">
                                 <!-- Button trigger modal -->
 
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Delete recipe">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round">
