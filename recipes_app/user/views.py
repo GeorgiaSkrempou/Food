@@ -9,6 +9,8 @@ from django.views.generic import CreateView, UpdateView
 from .forms import UserRegisterForm
 from .models import Account
 
+from django.core.mail import send_mail
+
 
 # Create your views here.
 
@@ -45,6 +47,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 class AccountPasswordResetView(PasswordResetView):
     email_template_name = "user/password_reset_email.html"
+    # send_mail('Subject here', email_template_name, 'georgiaskrempou@georgiacodes.me', ['georgiaskrempou@gmail.com'], fail_silently=False)
+
     success_url = reverse_lazy("user:password_reset_done")
 
 
