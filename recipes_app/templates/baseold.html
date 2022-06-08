@@ -59,30 +59,30 @@
                             <li>
                                 <a href="{% url 'recipes:user_recipes' %}"
                                    class="nav-link {% if url_name == 'user_recipes' %}active {% endif %} pe-2 ps-2 align-middle">
-                                   <i class="fs-4 bi-cart4"></i><span
+                                    <i class="fs-4 bi-cart4"></i><span
                                         class="ms-1 d-none d-sm-inline">My Recipes</span>
                                 </a>
                             </li>
                             </ul>
 
-                    <hr>
-                        <div class="dropdown pb-4">
-                            <a href="#"
-                               class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                               id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt="" width="30" height="30"
-                                     class="rounded-circle">
-                                <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                                <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="{% url 'user:logout' %}">Log out</a></li>
-                            </ul>
-                        </div>
-                    {% endif %}
+                            <hr>
+                            <div class="dropdown pb-4">
+                                <a href="#"
+                                   class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="{{ MEDIA_URL }}{{ user.avatar.avatar }}" alt="" width="30" height="30"
+                                         class="rounded-circle">
+                                    <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                    <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'user:logout' %}">Log out</a></li>
+                                </ul>
+                            </div>
+                        {% endif %}
                 {% endwith %}
 
             </div>
