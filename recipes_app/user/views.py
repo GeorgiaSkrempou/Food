@@ -70,6 +70,8 @@ class SignUpView(LogoutRequiredMixin, CreateView):
         context = {
             'form': form
         }
+        messages.error(request, "Please fill in the form correctly")
+
         # no other way to do this except with render and hardcoded template_name
         return render(request, template_name='user/signup.html', context=context)
 

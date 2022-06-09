@@ -17,6 +17,3 @@ class LogoutRequiredMixin(UserPassesTestMixin):
 
     def handle_no_permission(self):
         return redirect(reverse('recipes:home'))
-
-
-
