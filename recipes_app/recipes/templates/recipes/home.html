@@ -38,12 +38,8 @@
                     {% if forloop.first %}
 
                         <div class="carousel-item {% if forloop.first %} active {% endif %}">
-                            <img src="
-
-
-
-                                    {% if recipe.image %}{{ recipe.image.url }} {% else %} {{ MEDIA_URL }}recipe_default.jpg{% endif %}"
-                                 alt="" class="d-block w-100" height="650px">
+                            <img src="{% if recipe.image %} {{ recipe.resized_image_large.url }} {% else %} {{ MEDIA_URL }}recipe_default.jpg {% endif %}"
+                                 alt="" class="d-block w-100">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{ recipe.title }}</h5>
                                 <p>{{ recipe.description }}</p>
@@ -51,12 +47,8 @@
                         </div>
                     {% else %}
                         <div class="carousel-item {% if  forloop.first %} active {% endif %}">
-                            <img src="
-
-
-
-                                    {% if recipe.image %}{{ recipe.image.url }}{% else %}{{ MEDIA_URL }}recipe_default.jpg{% endif %}"
-                                 alt="" class="d-block w-100" height="650px">
+                            <img src="{% if recipe.image %} {{ recipe.resized_image_large.url }} {% else %} {{ MEDIA_URL }}recipe_default.jpg {% endif %}"
+                                 alt="" class="d-block w-100">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{ recipe.title }}</h5>
                                 <p>{{ recipe.description }}</p>
