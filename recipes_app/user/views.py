@@ -22,13 +22,12 @@ from django.views.generic import CreateView, UpdateView
 
 from .forms import UserRegisterForm
 from .models import Account
-from .utils import generate_token
+from .utils import generate_token, LogoutRequiredMixin, TokenGenerator
 
 
 # Create your views here.
 
-
-class AccountLoginView(LoginView):
+class AccountLoginView(LogoutRequiredMixin, LoginView):
     pass
 
 
@@ -36,7 +35,7 @@ class AccountLogoutView(LogoutView):
     next_page = reverse_lazy("recipes:home")
 
 
-class SignUpView(CreateView):
+class SignUpView(LogoutRequiredMixin, CreateView):
     form_class = UserRegisterForm
     success_url = reverse_lazy('user:login')
     template_name = 'user/signup.html'
@@ -54,7 +53,7 @@ class SignUpView(CreateView):
                 'user': user,
                 'domain': current_domain.domain,
                 'uid': urlsafe_base64_encode(str(user.pk).encode('utf-8')),
-                'token': generate_token.make_token(user)
+                'token': TokenGenerator().make_token(user)
             })
 
             email = EmailMessage(
