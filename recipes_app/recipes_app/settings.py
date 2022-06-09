@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+from django.contrib.messages import constants as messages
 import os
 from pathlib import Path
 
@@ -152,3 +152,12 @@ EMAIL_USE_TLS = True
 # development 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 DEFAULT_FROM_EMAIL = os.environ['FROM_EMAIL']
+
+# changing message.tags to match the bootstrap classes
+MESSAGE_TAGS = {
+    messages.DEBUG: 'info',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
