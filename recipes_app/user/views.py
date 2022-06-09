@@ -14,7 +14,7 @@ from django.contrib.auth.views import (
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -22,7 +22,7 @@ from django.views.generic import CreateView, UpdateView
 
 from .forms import UserRegisterForm
 from .models import Account
-from .utils import generate_token, LogoutRequiredMixin, TokenGenerator
+from .utils import LogoutRequiredMixin, TokenGenerator
 
 
 # Create your views here.
@@ -67,8 +67,11 @@ class SignUpView(LogoutRequiredMixin, CreateView):
 
             return redirect(reverse('user:login'))
 
-        # print(form.errors)
-        return redirect(reverse('user:signup'))
+        context = {
+            'form': form
+        }
+        # no other way to do this except with render and hardcoded template_name
+        return render(request, template_name='user/signup.html', context=context)
 
 
 def activate_user(request, uidb64, token):
@@ -78,7 +81,7 @@ def activate_user(request, uidb64, token):
     except Exception as e:
         user = None
 
-    if user and generate_token.check_token(user, token):
+    if user and TokenGenerator().check_token(user, token):
         user.is_active = True
         user.save()
 
