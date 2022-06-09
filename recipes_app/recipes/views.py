@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from datetime import datetime, timedelta
 import pytz
+from django.views.generic.list import MultipleObjectMixin
 
 from .models import Recipe
 
@@ -16,20 +17,21 @@ from .models import Recipe
 # Create your views here.
 
 
-class HomeView(TemplateView):
+class HomeView(ListView):
     template_name = 'recipes/home.html'
+    model = Recipe
+    context_object_name = 'recipe_list'
+    queryset = Recipe.objects.order_by('title')
+
+
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
-    # attribute names must be named like this
     model = Recipe
-    # the form details are automatically saved like this
     fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters', 'image']
-    #  success url? # it's the url not the template!
     success_url = reverse_lazy('recipes:list_recipe')
 
 
-# This lists every instance of the teacher
 # model_list.hmtl
 class RecipeListView(LoginRequiredMixin, ListView):
     model = Recipe
