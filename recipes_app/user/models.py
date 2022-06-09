@@ -1,6 +1,7 @@
-from PIL import Image
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 # Create your models here.
@@ -42,17 +43,11 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_images', blank=True)
-
-    def save_image(self, *args, **kwargs):
-        super().save()
-
-        img = Image.open(self.avatar.path)
-
-        if img.height > 500 or img.width > 500:
-            new_img = (500, 500)
-            img.thumbnail(new_img)
-            img.save(self.avatar.path)
+    avatar = ProcessedImageField(default='default.jpg', upload_to='profile_images',
+                                 processors=[ResizeToFill(300, 300)],
+                                 format='JPEG',
+                                 options={'quality': 60}, blank=True,
+                                 null=True)
 
     objects = MyAccountManager()
 

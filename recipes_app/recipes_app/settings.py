@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'crispy_forms',
     'crispy_bootstrap5',
-    'ckeditor'
+    'ckeditor',
+    'imagekit',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
