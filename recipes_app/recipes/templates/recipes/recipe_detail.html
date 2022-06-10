@@ -4,7 +4,7 @@
 {% block content_title %}
     <div class="d-flex justify-content-between">
     <h3 class="d-inline-block">{{ recipe.title }}</h3>
-    <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe" class="text-decoration-none">
+    <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe" class="text-decoration-none btn-edit-recipe pt-2">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
              fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
              stroke-linejoin="round">
@@ -31,8 +31,7 @@
     {% endif %}
     <hr>
 
-    <table class="table" id="recipe-list">
-
+    <table class="table recipe-detail" id="recipe-list" >
         <tbody>
         <tr>
             <th scope="row">Portions</th>

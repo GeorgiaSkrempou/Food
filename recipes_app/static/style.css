@@ -101,15 +101,22 @@ body.text-light .form-control:focus,
 body.text-light .form-control:active,
 body.text-light .form-control,
 body.text-light .input-group-text,
-body.text-light .modal-content{
+body.text-light .modal-content,
+body.text-light .recipe-detail{
     background-color: inherit;
     color: white;
 }
 
-body.text-light td svg {
+body.text-light td svg,
+body.text-light .btn-edit-recipe svg {
     stroke: white;
     stroke-width: 1.75;
 }
+
+/*body.text-light svg {*/
+/*    stroke: white;*/
+/*    stroke-width: 1;*/
+/*}*/
 
 .footer-styled{
     border-bottom: 1px solid;
