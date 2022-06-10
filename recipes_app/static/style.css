@@ -111,10 +111,6 @@ body.text-light td svg {
     stroke-width: 1.75;
 }
 
-.cke_reset, .cke_wysiwyg_frame, .cke_inner {
-    background-color: pink !important;
-}
-
 .footer-styled{
     border-bottom: 1px solid;
 }
