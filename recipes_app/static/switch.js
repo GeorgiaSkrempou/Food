@@ -22,13 +22,14 @@
 
     if (document.body.classList.contains('text-dark')) {
       document.body.classList.replace('text-dark', 'text-light');
-    } else {
+    }
+      else {
       document.body.classList.add('text-light');
     }
 
     // Tables
-    var tables = document.querySelectorAll('table');
-    for (var i = 0; i < tables.length; i++) {
+    let tables = document.querySelectorAll('table');
+    for (let i = 0; i < tables.length; i++) {
       // add table-dark class to each table
       tables[i].classList.add('table-dark');
     }
@@ -58,8 +59,8 @@
     }
 
     // Tables
-    var tables = document.querySelectorAll('table');
-    for (var i = 0; i < tables.length; i++) {
+    let tables = document.querySelectorAll('table');
+    for (let i = 0; i < tables.length; i++) {
       if (tables[i].classList.contains('table-dark')) {
         tables[i].classList.remove('table-dark');
       }
@@ -96,12 +97,12 @@
   }
 
   function setup() {
-    var settings = localStorage.getItem('lightSwitch');
-    if (settings == null) {
+    let settings = localStorage.getItem('lightSwitch');
+    if (settings === null) {
       settings = getSystemDefaultTheme();
     }
 
-    if (settings == 'dark') {
+    if (settings === 'dark') {
       lightSwitch.checked = true;
     }
 

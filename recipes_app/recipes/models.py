@@ -20,7 +20,7 @@ class Recipe(models.Model):
     image = models.ImageField(default='recipe_default.jpg', upload_to='recipe_images', blank=True, null=True)
     resized_image_large = ImageSpecField(
         source='image',
-        processors=[ResizeToFill(600, 250)],
+        processors=[ResizeToFill(600, 230)],
         format='PNG',
         options={'quality': 100},
     )

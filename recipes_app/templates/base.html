@@ -29,42 +29,42 @@
 
 <div class="container-fluid overflow-hidden">
     <div class="row vh-100 overflow-auto">
-        <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
-            <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
-                <div class="d-flex justify-content-between w-100">
+        <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 sidebar d-flex sticky-top">
+            <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pb-2 pt-2 text-white">
+                <div class="d-flex justify-content-between w-100 px-lg-2 px-md-2 px-sm-2">
 
-
-                <a href="{% url 'recipes:home' %}"
-                   class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5">F<span class="d-none d-sm-inline">oodie</span></span>
-                </a>
-                         <div class="form-check form-switch">
-                    <label class="form-check-label ms-3" for="lightSwitch">
-                        <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="25"
-                                height="25"
-                                fill="currentColor"
-                                class="bi bi-brightness-high"
-                                viewBox="0 0 16 16"
-                        >
-                            <path
-                                    d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
-                            />
-                        </svg>
-                    </label>
-                    <input class="form-check-input" type="checkbox" id="lightSwitch"/>
-                </div>
+                    <a href="{% url 'recipes:home' %}"
+                       class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-decoration-none sidebar-logo">
+                        <span class="fs-5">F<span class="d-none d-sm-inline">oodie</span></span>
+                    </a>
+                    <div class="form-check form-switch">
+                        <label class="form-check-label ms-3" for="lightSwitch">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="25"
+                                    height="25"
+                                    fill="currentColor"
+                                    class="bi bi-brightness-high"
+                                    viewBox="0 0 16 16"
+                            >
+                                <path
+                                        d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+                                />
+                            </svg>
+                        </label>
+                        <input class="form-check-input" type="checkbox" id="lightSwitch"/>
+                    </div>
                 </div>
 
 
                 {% with request.resolver_match.url_name as url_name %}
 
-                    <ul class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start"
+                    <ul class="nav nav-pills px-2 flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start"
                         id="menu">
+
                         <li class="nav-item">
                             <a href="{% url 'recipes:home' %}"
-                               class="nav-link {% if url_name == 'home' %}active{% endif %} px-sm-0 px-md-2 px-lg-2">
+                               class="nav-link {% if url_name == 'home' %}active{% endif %} px-sm-2 px-md-2 px-lg-2">
                                 <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
@@ -73,22 +73,26 @@
 
                             <li>
                                 <a href="{% url 'recipes:list_recipe' %}"
-                                   class="nav-link {% if url_name == 'list_recipe' %}active{% endif %} px-sm-0 px-md-2 px-lg-2">
+                                   class="nav-link {% if url_name == 'list_recipe' %}active{% endif %} px-sm-2 px-md-2 px-lg-2">
                                     <i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">Recipes</span>
                                 </a>
 
                             </li>
                             <li>
                                 <a href="{% url 'recipes:user_recipes' %}"
-                                   class="nav-link {% if url_name == 'user_recipes' %}active{% endif %} px-sm-0 px-md-2 px-lg-2">
+                                   class="nav-link {% if url_name == 'user_recipes' %}active{% endif %} px-sm-2 px-md-2 px-lg-2">
                                     <i class="fs-5 bi-cart4"></i><span class="ms-1 d-none d-sm-inline">My Recipes</span></a>
                             </li>
                         {% endif %}
+
                     </ul>
                 {% endwith %}
+
                 {% if user.is_authenticated %}
                     <div class="dropdown py-sm-4 mt-sm-auto ms-auto ms-sm-0 flex-shrink-1">
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+
+                        <a href="#"
+                           class="d-flex align-items-center text-decoration-none dropdown-toggle profile-text-white"
                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             {% if user.avatar %}
                                 <img src="{{ MEDIA_URL }}{{ user.avatar }}" alt="" width="28" height="28"
@@ -98,7 +102,7 @@
                                      class="rounded-circle border">
                             {% endif %}
 
-                            <span class="d-none d-sm-inline ms-3">{{ user.username }}</span>
+                            <span class="d-none d-sm-inline ms-3 profile-logo">{{ user.username }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
@@ -149,7 +153,7 @@
 
 
             </main>
-            <footer class="row bg-light py-4 mt-auto">
+            <footer class="row bg-light py-4 mt-auto footer-styled">
                 <div class="col">Georgia Skrempou | Alex Raileanu</div>
             </footer>
         </div>

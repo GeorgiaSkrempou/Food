@@ -82,4 +82,39 @@ width: 100%;
     margin-right: 1rem;
 }
 
+.sidebar {
+    background-color: #212529;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
 
+}
+
+.sidebar-logo, .profile-logo, .dropdown-toggle:after{
+    color: white;
+}
+
+.card {
+    background-color: inherit;
+}
+
+body.text-light .form-control:focus,
+body.text-light .form-control:active,
+body.text-light .form-control,
+body.text-light .input-group-text,
+body.text-light .modal-content{
+    background-color: inherit;
+    color: white;
+}
+
+body.text-light td svg {
+    stroke: white;
+    stroke-width: 1.75;
+}
+
+.cke_reset, .cke_wysiwyg_frame, .cke_inner {
+    background-color: pink !important;
+}
+
+.footer-styled{
+    border-bottom: 1px solid;
+}
