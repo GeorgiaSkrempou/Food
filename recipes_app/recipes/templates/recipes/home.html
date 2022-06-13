@@ -30,13 +30,17 @@
     {% endif %}
 
 
+
+
+
     {% if recipe_list %}
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for recipe in recipe_list %}
 
                         <div class="carousel-item {% if forloop.first %}active {% endif %}">
-                            <img src="{% if recipe.image %} {{ recipe.resized_image_large.url }} {% else %} {{ MEDIA_URL }}recipe_default.jpg {% endif %}"
+
+                            <img src="{% if recipe.image and recipe.resized_image_large %} {{ recipe.resized_image_large.url }} {% else %} {{ MEDIA_URL }}recipe_default.jpg {% endif %}"
                                  alt="" class="d-block w-100">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{ recipe.title }}</h5>
