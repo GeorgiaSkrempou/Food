@@ -35,16 +35,16 @@
                     <tbody class="table-group-divider">
                     {% for recipe in recipe_list %}
                         <tr>
-                            <td class="priority-1 text-center">
+                            <td class="priority-1 text-center align-middle">
                                 <a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a>
                             </td>
-                            <td class="priority-3 text-center">
+                            <td class="priority-3 text-center align-middle">
                                 {{ recipe.description }}
                             </td>
-                            <td class="priority-3 text-center">
+                            <td class="priority-3 text- align-middle">
                                 {{ recipe.filters }}
                             </td>
-                            <td class="priority-1 text-end">
+                            <td class="priority-1 text-end align-middle">
                                 <!-- Button trigger modal -->
 
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Delete recipe">

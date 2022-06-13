@@ -35,7 +35,6 @@
                     <input type="text" class="form-control" placeholder="Search in recipes" aria-label="Username"
                            aria-describedby="basic-addon1" id="searchInput" onkeyup="search()">
                 </div>
-                {#                <input class="py-2" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search...">#}
 
                 <table class="table table-hover recipe-list" id="recipe-list">
                     <thead>
@@ -50,17 +49,17 @@
 
                     {% for recipe in recipe_list %}
                         <tr>
-                            <td class="priority-1 text-center">
+                            <td class="priority-1 text-center align-middle">
                                 <a href="{% url 'recipes:detail_recipe' recipe.id %}"
                                    title="See recipe details">{{ recipe.title }}</a>
                             </td>
-                            <td class="priority-3 text-center">
+                            <td class="priority-3 text-center align-middle">
                                 {{ recipe.description }}
                             </td>
-                            <td class="priority-3 text-center">
+                            <td class="priority-3 text-center align-middle">
                                 {{ recipe.filters }}
                             </td>
-                            <td class="priority-1 text-end">
+                            <td class="priority-1 text-end align-middle">
                                 <form action="{% url 'recipes:add_recipe_to_account' recipe.id %}" method="POST"
                                       class="d-inline-block">
                                     {% csrf_token %}
