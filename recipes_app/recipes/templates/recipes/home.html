@@ -38,7 +38,7 @@
             <div class="carousel-inner">
                 {% for recipe in recipe_list %}
 
-                        <div class="carousel-item {% if forloop.first %}active {% endif %}">
+                        <div class="carousel-item">
 
                             <img src="{% if recipe.image and recipe.resized_image_large %} {{ recipe.resized_image_large.url }} {% else %} {{ MEDIA_URL }}recipe_default.jpg {% endif %}"
                                  alt="" class="d-block w-100">
