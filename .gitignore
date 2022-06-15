@@ -10,3 +10,4 @@ recipes_app/media/recipe_images
 !recipes_app/media/recipe_images/.gitkeep
 recipes_app/media/CACHE/images/recipe_images
 !recipes_app/media/CACHE/images/recipe_images/.gitkeep
+recipes_app/media/CACHE/images/recipe_default
