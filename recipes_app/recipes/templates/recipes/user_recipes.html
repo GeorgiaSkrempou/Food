@@ -47,7 +47,7 @@
                             <td class="priority-1 text-end align-middle">
                                 <!-- Button trigger modal -->
 
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Delete recipe">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#user-recipe-modal-{{ recipe.id }}" title="Delete recipe">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round">
@@ -59,7 +59,7 @@
                                 </a>
                             </td>
                         </tr>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        <div class="modal fade" id="user-recipe-modal-{{ recipe.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
                              aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -69,7 +69,7 @@
                                                 aria-label="close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to delete?
+                                        Are you sure you want to remove {{ recipe.title }} from your account?
                                     </div>
                                     <div class="modal-footer">
                                         <form action="{% url 'recipes:delete_recipe_from_account' recipe.id %}"
@@ -77,7 +77,7 @@
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel
+                                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel
                                         </button>
 
                                     </div>
