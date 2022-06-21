@@ -1,9 +1,8 @@
 from django.urls import path
-from django.conf.urls.static import static
-from django.conf import settings
 
 from .views import (RecipeCreateView, RecipeListView, HomeView, RecipeDetailView, RecipeUpdateView,
-                    RecipeDeleteView, UserRecipesView, add_recipe_to_account, delete_recipe_from_account)
+                    RecipeDeleteView, UserRecipesView, add_recipe_to_account, delete_recipe_from_account,
+                    IngredientCreateView, IngredientListView, IngredientUpdateView, IngredientDeleteView)
 
 app_name = "recipes"
 
@@ -12,9 +11,13 @@ urlpatterns = [
     path("add_recipe/", RecipeCreateView.as_view(), name="add_recipe"),
     path("list_recipe/", RecipeListView.as_view(), name="list_recipe"),
     path("detail_recipe/<int:pk>/", RecipeDetailView.as_view(), name="detail_recipe"),
-    path("update_recipe/<int:pk>", RecipeUpdateView.as_view(), name="update_recipe"),
-    path("delete_recipe/<int:pk>", RecipeDeleteView.as_view(), name="delete_recipe"),
+    path("update_recipe/<int:pk>/", RecipeUpdateView.as_view(), name="update_recipe"),
+    path("delete_recipe/<int:pk>/", RecipeDeleteView.as_view(), name="delete_recipe"),
     path("user_recipes/", UserRecipesView.as_view(), name='user_recipes'),
     path("add_recipe_to_account/<int:pk>", add_recipe_to_account, name="add_recipe_to_account"),
     path("delete_recipe_from_account/<int:pk>", delete_recipe_from_account, name="delete_recipe_from_account"),
+    path("add_ingredient/", IngredientCreateView.as_view(), name="add_ingredient"),
+    path("list_ingredient/", IngredientListView.as_view(), name="list_ingredient"),
+    path("update_ingredient/<int:pk>/", IngredientUpdateView.as_view(), name="update_ingredient"),
+    path("delete_ingredient/<int:pk>/", IngredientDeleteView.as_view(), name="delete_ingredient"),
 ]

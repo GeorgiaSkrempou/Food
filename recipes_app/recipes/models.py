@@ -9,6 +9,15 @@ from user.models import Account
 
 # Create your models here.
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=300, blank=False)
+    quantity = models.FloatField(blank=False)
+    unit = models.CharField(max_length=30, blank=False)
+    contains = models.CharField(max_length=300, blank=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Recipe(models.Model):
     title = models.CharField(max_length=300, blank=False)
@@ -26,6 +35,7 @@ class Recipe(models.Model):
     )
 
     user = models.ManyToManyField(Account, related_name='recipes', blank=True)
+    recipe_ingredients = models.ManyToManyField(Ingredient, related_name='ingredient', blank=False)
 
     def __str__(self):
         return f"{self.title}"

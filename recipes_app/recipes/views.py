@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import pytz
 from django.views.generic.list import MultipleObjectMixin
 
-from .models import Recipe
+from .models import Recipe, Ingredient
 
 
 # Create your views here.
@@ -24,15 +24,12 @@ class HomeView(ListView):
     queryset = Recipe.objects.order_by('title')
 
 
-
-
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters', 'image']
+    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters', 'image', 'recipe_ingredients']
     success_url = reverse_lazy('recipes:list_recipe')
 
 
-# model_list.hmtl
 class RecipeListView(LoginRequiredMixin, ListView):
     model = Recipe
     #  change the query done by django to something more custom
@@ -119,3 +116,32 @@ def delete_recipe_from_account(request, pk):
         messages.success(request, "Recipe deleted successfully")
 
         return HttpResponseRedirect(reverse('recipes:user_recipes'))
+
+
+class IngredientListView(LoginRequiredMixin, ListView):
+    model = Ingredient
+    #  change the query done by django to something more custom
+    queryset = Ingredient.objects.order_by('name')
+    context_object_name = 'ingredient_list'
+    paginate_by = 10
+
+
+class IngredientCreateView(LoginRequiredMixin, CreateView):
+    model = Ingredient
+    fields = '__all__'
+    success_url = reverse_lazy('recipes:list_ingredient')
+
+
+class IngredientUpdateView(LoginRequiredMixin, UpdateView):
+    model = Ingredient
+    fields = '__all__'
+    success_url = reverse_lazy('recipes:list_ingredient')
+
+
+class IngredientDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Ingredient
+
+    def get_success_url(self):
+        return reverse("recipes:list_ingredient")
+
+    success_message = "Ingredient deleted successfully"
