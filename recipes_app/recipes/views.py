@@ -1,17 +1,17 @@
 import random
+from datetime import datetime
 
+import pytz
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
-from django.contrib import messages
-from datetime import datetime, timedelta
-import pytz
-from django.views.generic.list import MultipleObjectMixin
+from django.urls import reverse_lazy, reverse
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from .models import Recipe
+from .forms import RecipeForm, IngredientFormSet
+from .models import Recipe, Ingredient
 
 
 # Create your views here.
@@ -24,15 +24,56 @@ class HomeView(ListView):
     queryset = Recipe.objects.order_by('title')
 
 
-
-
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters', 'image']
+    form_class = RecipeForm
+
     success_url = reverse_lazy('recipes:list_recipe')
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['recipe_ingredient'] = IngredientFormSet(self.request.POST)
+        else:
+            data['recipe_ingredient'] = IngredientFormSet()
+        return data
 
-# model_list.hmtl
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ingredient = context['recipe_ingredient']
+        self.object = form.save()
+        if ingredient.is_valid():
+            ingredient.instance = self.object
+            ingredient.save()
+        return super().form_valid(form)
+
+
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
+    model = Recipe
+    form_class = RecipeForm
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['recipe_ingredient'] = IngredientFormSet(self.request.POST)
+        else:
+            data['recipe_ingredient'] = IngredientFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ingredient = context['recipe_ingredient']
+        self.object = form.save()
+        if ingredient.is_valid():
+            ingredient.instance = self.object
+            ingredient.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse("recipes:detail_recipe", kwargs={"pk": pk})
+
+
 class RecipeListView(LoginRequiredMixin, ListView):
     model = Recipe
     #  change the query done by django to something more custom
@@ -44,15 +85,6 @@ class RecipeListView(LoginRequiredMixin, ListView):
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
-
-
-class RecipeUpdateView(LoginRequiredMixin, UpdateView):
-    model = Recipe
-    fields = ['title', 'description', 'portions', 'ingredients', 'steps', 'filters', 'image']
-
-    def get_success_url(self):
-        pk = self.kwargs["pk"]
-        return reverse("recipes:detail_recipe", kwargs={"pk": pk})
 
 
 class RecipeDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
@@ -119,3 +151,32 @@ def delete_recipe_from_account(request, pk):
         messages.success(request, "Recipe deleted successfully")
 
         return HttpResponseRedirect(reverse('recipes:user_recipes'))
+
+
+class IngredientListView(LoginRequiredMixin, ListView):
+    model = Ingredient
+    #  change the query done by django to something more custom
+    queryset = Ingredient.objects.order_by('name')
+    context_object_name = 'ingredient_list'
+    paginate_by = 10
+
+
+class IngredientCreateView(LoginRequiredMixin, CreateView):
+    model = Ingredient
+    fields = '__all__'
+    success_url = reverse_lazy('recipes:list_ingredient')
+
+
+class IngredientUpdateView(LoginRequiredMixin, UpdateView):
+    model = Ingredient
+    fields = '__all__'
+    success_url = reverse_lazy('recipes:list_ingredient')
+
+
+class IngredientDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Ingredient
+
+    def get_success_url(self):
+        return reverse("recipes:list_ingredient")
+
+    success_message = "Ingredient deleted successfully"

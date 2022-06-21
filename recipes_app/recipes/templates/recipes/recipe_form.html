@@ -7,14 +7,44 @@
 
 {% block content %}
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" id="form-container">
 
         {% csrf_token %}
         {{ form.media }}
         {{ form|crispy }}
+
+        {{ recipe_ingredient.management_form }}
+        {% for form in recipe_ingredient %}
+            <div class="ingredient-form">
+                {{ form|crispy }}
+            </div>
+        {% endfor %}
+        <button class="btn btn-outline-primary" id="add-ingredient">Add ingredient</button>
         <input class="btn btn-primary" type="submit" value="SUBMIT">
 
     </form>
 
 {% endblock %}
 
+{% block javascript %}
+    <script>
+        let ingredientForm = document.querySelectorAll(".ingredient-form");
+        let container = document.querySelector("#form-container");
+        let addButton = document.querySelector("#add-ingredient");
+        let totalForms = document.querySelector("#id_recipeingredient_set-TOTAL_FORMS");
+
+        let formNum = ingredientForm.length - 1;
+
+        addButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            let newForm = ingredientForm[0].cloneNode(true);
+            let formRegex = RegExp(`recipeingredient_set-(\\d){1}-`,'g');
+
+            formNum++;
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `recipeingredient_set-${formNum}-`);
+            container.insertBefore(newForm, addButton);
+
+            totalForms.setAttribute('value', `${formNum+1}`);
+        })
+    </script>
+{% endblock %}

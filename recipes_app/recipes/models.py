@@ -9,12 +9,21 @@ from user.models import Account
 
 # Create your models here.
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=300, blank=False)
+    contains = models.CharField(max_length=300, blank=True)
+
+    class Meta:
+        verbose_name = 'Ingredient'
+
+    def __str__(self):
+        return self.name
+
 
 class Recipe(models.Model):
     title = models.CharField(max_length=300, blank=False)
     description = models.CharField(max_length=200, default="", blank=False)
     portions = models.IntegerField(validators=[MinValueValidator(limit_value=1)], blank=False)
-    ingredients = RichTextField(blank=False)
     steps = RichTextField(blank=False)
     filters = models.CharField(max_length=300, blank=False)
     image = models.ImageField(default='recipe_default.jpg', upload_to='recipe_images', blank=True, null=True)
@@ -26,6 +35,28 @@ class Recipe(models.Model):
     )
 
     user = models.ManyToManyField(Account, related_name='recipes', blank=True)
+    ingredients = models.ManyToManyField(
+        Ingredient,
+        related_name='ingredient',
+        blank=False,
+        through='RecipeIngredient'
+    )
+
+    class Meta:
+        verbose_name = 'Recipe'
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
+
+
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    quantity = models.FloatField(blank=False, null=True)
+    unit = models.CharField(max_length=30, blank=False, null=True)
+
+    class Meta:
+        verbose_name = 'Recipe_ingredient'
+
+    def __str__(self):
+        return f"{self.recipe.title} - {self.ingredient.name}"
