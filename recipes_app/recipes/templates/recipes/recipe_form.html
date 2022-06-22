@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block content %}
-
     <form method="POST" enctype="multipart/form-data" id="form-container">
 
         {% csrf_token %}
@@ -14,13 +13,34 @@
         {{ form|crispy }}
 
         {{ recipe_ingredient.management_form }}
-        {% for form in recipe_ingredient %}
-            <div class="ingredient-form">
-                {{ form|crispy }}
-            </div>
-        {% endfor %}
-        <button class="btn btn-outline-primary" id="add-ingredient">Add ingredient</button>
-        <input class="btn btn-primary" type="submit" value="SUBMIT">
+        <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button"
+                data-bs-toggle="collapse" data-bs-target="#ingredient-list"
+                aria-expanded="false" aria-controls="ingredient-list">
+            Ingredients
+        </button>
+
+        <div class="collapse" id="ingredient-list">
+            {% for form in recipe_ingredient %}
+                <div class="ingredient-form mt-2">
+                    <div class="row">
+                        <div class="col">
+                            {{ form.ingredient|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.unit|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.quantity|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.DELETE|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <button class="btn btn-outline-primary" id="add-ingredient"><i class="bi bi-plus-square"></i></button>
+        </div>
+        <input class="btn btn-primary d-block mt-2" type="submit" value="SUBMIT">
 
     </form>
 
@@ -29,22 +49,22 @@
 {% block javascript %}
     <script>
         let ingredientForm = document.querySelectorAll(".ingredient-form");
-        let container = document.querySelector("#form-container");
+        let container = document.querySelector("#ingredient-list");
         let addButton = document.querySelector("#add-ingredient");
         let totalForms = document.querySelector("#id_recipeingredient_set-TOTAL_FORMS");
 
         let formNum = ingredientForm.length - 1;
 
-        addButton.addEventListener('click', function(e) {
+        addButton.addEventListener('click', function (e) {
             e.preventDefault();
-            let newForm = ingredientForm[0].cloneNode(true);
-            let formRegex = RegExp(`recipeingredient_set-(\\d){1}-`,'g');
+            let newForm = ingredientForm[ingredientForm.length - 1].cloneNode(true);
+            let formRegex = RegExp(`recipeingredient_set-(\\d){1}-`, 'g');
 
             formNum++;
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `recipeingredient_set-${formNum}-`);
             container.insertBefore(newForm, addButton);
 
-            totalForms.setAttribute('value', `${formNum+1}`);
-        })
+            totalForms.setAttribute('value', `${formNum + 1}`);
+        });
     </script>
 {% endblock %}

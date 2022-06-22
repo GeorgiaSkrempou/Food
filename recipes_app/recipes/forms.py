@@ -5,9 +5,6 @@ from .models import Recipe, RecipeIngredient
 
 
 class RecipeForm(forms.ModelForm):
-    # quantity = forms.FloatField()
-    # unit = forms.CharField(max_length=30)
-
     class Meta:
         model = Recipe
         exclude = ('user', 'ingredients',)
