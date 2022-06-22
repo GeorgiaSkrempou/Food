@@ -55,9 +55,9 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            data['recipe_ingredient'] = IngredientFormSet(self.request.POST)
+            data['recipe_ingredient'] = IngredientFormSet(self.request.POST, instance=self.object)
         else:
-            data['recipe_ingredient'] = IngredientFormSet()
+            data['recipe_ingredient'] = IngredientFormSet(instance=self.object)
         return data
 
     def form_valid(self, form):
@@ -67,6 +67,9 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         if ingredient.is_valid():
             ingredient.instance = self.object
             ingredient.save()
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
         return super().form_valid(form)
 
     def get_success_url(self):

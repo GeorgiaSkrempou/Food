@@ -85,11 +85,9 @@ width: 100%;
 .sidebar {
     background-color: #212529;
     border-right: 1px solid;
-    border-bottom: 1px solid;
-
 }
 
-.sidebar-logo, .profile-logo, .dropdown-toggle:after{
+.sidebar-logo, .profile-logo{
     color: white;
 }
 
@@ -123,6 +121,6 @@ body.text-light .btn-edit-recipe svg{
 /*    stroke-width: 1;*/
 /*}*/
 
-.footer-styled{
-    border-bottom: 1px solid;
+.sidebar .dropdown-toggle {
+    color: white;
 }
