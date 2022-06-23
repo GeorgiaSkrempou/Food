@@ -50,8 +50,14 @@
                     {% for recipe in recipe_list %}
                         <tr>
                             <td class="priority-1 text-center align-middle">
-                                <a href="{% url 'recipes:detail_recipe' recipe.id %}"
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="recipe-checkbox-{{ recipe.id }}">
+                                    <label class="form-check-label" for="recipe-checkbox-{{ recipe.id }}">
+                                        <a href="{% url 'recipes:detail_recipe' recipe.id %}"
                                    title="See recipe details">{{ recipe.title }}</a>
+                                    </label>
+                                </div>
+
                             </td>
                             <td class="priority-3 text-center align-middle">
                                 {{ recipe.description }}
@@ -88,7 +94,8 @@
 
                                 <!-- Button trigger modal -->
 
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#recipe-modal-{{ recipe.id }}" title="Delete recipe">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#recipe-modal-{{ recipe.id }}"
+                                   title="Delete recipe">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round">
@@ -101,7 +108,8 @@
                             </td>
                         </tr>
                         <!-- Modal -->
-                        <div class="modal fade" id="recipe-modal-{{ recipe.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        <div class="modal fade" id="recipe-modal-{{ recipe.id }}" tabindex="-1"
+                             aria-labelledby="exampleModalLabel"
                              aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -154,6 +162,12 @@
                     {% endif %}
                 </ul>
             {% endif %}
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <button type="submit" class="btn btn-outline-primary" name="save" value="save">Go shopping</button>
         </div>
     </div>
 {% endblock %}

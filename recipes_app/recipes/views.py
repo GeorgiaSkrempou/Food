@@ -7,11 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic.edit import ModelFormMixin
 
 from .forms import RecipeForm, IngredientFormSet
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, RecipeIngredient
 
 
 # Create your views here.
@@ -22,6 +24,13 @@ class HomeView(ListView):
     model = Recipe
     context_object_name = 'recipe_list'
     queryset = Recipe.objects.order_by('title')
+
+
+@login_required
+def shopping_list(request):
+    ingredients_list = RecipeIngredient.objects.all()
+
+    return render(request, 'recipes/shopping_list.html', {'ingredients_list': ingredients_list})
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
@@ -69,7 +78,6 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
             ingredient.save()
         else:
             return self.render_to_response(self.get_context_data(form=form))
-
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -77,13 +85,17 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("recipes:detail_recipe", kwargs={"pk": pk})
 
 
-class RecipeListView(LoginRequiredMixin, ListView):
+class RecipeListView(LoginRequiredMixin, ListView, ModelFormMixin):
     model = Recipe
     #  change the query done by django to something more custom
     queryset = Recipe.objects.order_by('title')
     #  replaces the object_list with recipe_list
     context_object_name = 'recipe_list'
     paginate_by = 10
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('save'):
+            print('poop')
 
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
