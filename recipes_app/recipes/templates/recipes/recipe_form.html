@@ -23,6 +23,7 @@
             {% for form in recipe_ingredient %}
                 <div class="ingredient-form mt-2">
                     {{ form|crispy }}
+{#                    {{ form.recipe|as_crispy_field }}#}
 {#                    <div class="row">#}
 {#                        <div class="col">#}
 {#                            {{ form.ingredient|as_crispy_field }}#}

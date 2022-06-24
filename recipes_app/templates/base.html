@@ -9,7 +9,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
 
     <link href="{% static 'recipes/bootstrap.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
@@ -81,12 +81,14 @@
                             <li>
                                 <a href="{% url 'recipes:user_recipes' %}"
                                    class="nav-link {% if url_name == 'user_recipes' %}active{% endif %} px-sm-2 px-md-2 px-lg-2">
-                                    <i class="fs-5 bi-bookmarks"></i><span class="ms-1 d-none d-sm-inline">My Recipes</span></a>
+                                    <i class="fs-5 bi-bookmarks"></i><span
+                                        class="ms-1 d-none d-sm-inline">My Recipes</span></a>
                             </li>
                             <li>
                                 <a href="{% url 'recipes:list_ingredient' %}"
                                    class="nav-link {% if url_name == 'list_ingredient' %}active{% endif %} px-sm-2 px-md-2 px-lg-2">
-                                    <i class="fs-5 bi-cart4"></i><span class="ms-1 d-none d-sm-inline">Ingredients</span></a>
+                                    <i class="fs-5 bi-cart4"></i><span
+                                        class="ms-1 d-none d-sm-inline">Ingredients</span></a>
                             </li>
                         {% endif %}
 

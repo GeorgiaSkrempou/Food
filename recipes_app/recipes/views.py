@@ -7,13 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.views.generic.edit import ModelFormMixin
 
 from .forms import RecipeForm, IngredientFormSet
-from .models import Recipe, Ingredient, RecipeIngredient
+from .models import Recipe, Ingredient
+from .utils import add_ingredient_quantities
 
 
 # Create your views here.
@@ -92,31 +92,47 @@ class RecipeListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def post(self, request, *args, **kwargs):
-        # if request.method == "POST":
-        #     print('poop')
-        # print(request.POST.getlist('recipe-checkbox'))
-        # print(request.POST.get('poop'))
-        # if request.POST.get('save'):
-        #     print('poop')
-        if request.POST.get('save'):
-            context = request.POST.getlist('recipe-checkbox')
-            # return redirect(reverse('recipes:shopping_list'))
-            # ingredient_list=[]
-            # for recipe_id in context:
 
-            ingredient_list = RecipeIngredient.objects.filter(recipe_id__in=context)
-            unique_ingredient_list = {}
-            for ingredient_object in ingredient_list:
-                ingredient_id = ingredient_object.ingredient_id
-                if ingredient_object.ingredient_id not in unique_ingredient_list:
-                    unique_ingredient_list[ingredient_id] = {
-                        'ingredient': ingredient_object.ingredient,
-                        'quantity': 0,
-                        'unit': '',
-                    }
-                unique_ingredient_list[ingredient_id]['quantity'] += ingredient_object.quantity
-                unique_ingredient_list[ingredient_id]['unit'] = ingredient_object.unit
-            return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
+        if request.POST.get('shop'):
+            selected_recipes = request.POST.getlist('recipe-checkbox')
+
+            if selected_recipes:
+                unique_ingredient_list = add_ingredient_quantities(selected_recipes=selected_recipes)
+                return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
+            else:
+                messages.warning(request, "Please select a recipe first")
+                return HttpResponseRedirect(reverse('recipes:list_recipe'))
+
+        elif request.POST.get('delete'):
+            selected_recipes = request.POST.getlist('recipe-checkbox')
+            Recipe.objects.filter(id__in=selected_recipes).delete()
+
+            if selected_recipes:
+                messages.success(request, "Recipe(s) deleted successfully")
+            else:
+                messages.warning(request, "Please select a recipe first")
+
+            return HttpResponseRedirect(reverse('recipes:list_recipe'))
+
+        elif request.POST.get('add-to-my-recipes'):
+            selected_recipes = request.POST.getlist('recipe-checkbox')
+            user = request.user
+
+            message_was_shown = False
+            for recipe_id in selected_recipes:
+                recipe = Recipe.objects.get(pk=recipe_id)
+
+                if not user.recipes.filter(id=recipe_id):
+                    user.recipes.add(recipe)
+                    if message_was_shown is False:
+                        messages.success(request, "Recipe(s) added successfully")
+                        message_was_shown = True
+                else:
+                    if message_was_shown is False:
+                        messages.warning(request, "Recipe(s) already in your account")
+                        message_was_shown = True
+
+            return HttpResponseRedirect(reverse('recipes:list_recipe'))
 
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
@@ -160,33 +176,28 @@ class UserRecipesView(LoginRequiredMixin, ListView):
 
         return random_recipe
 
+    def post(self, request, *args, **kwargs):
 
-@login_required
-def add_recipe_to_account(request, pk):
-    if request.POST:
-        user = request.user
-        recipe = Recipe.objects.get(pk=pk)
+        if request.POST.get('shop'):
+            selected_recipes = request.POST.getlist('recipe-checkbox')
 
-        if not user.recipes.filter(id=recipe.id):
-            user.recipes.add(recipe)
-            user.save()
+            if selected_recipes:
+                unique_ingredient_list = add_ingredient_quantities(selected_recipes=selected_recipes)
+                return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
+            else:
+                messages.warning(request, "Please select a recipe first")
+                return HttpResponseRedirect(reverse('recipes:user_recipes'))
 
-            messages.success(request, "Recipe added successfully")
-        else:
-            messages.warning(request, "Recipe already in your account")
+        elif request.POST.get('delete'):
+            selected_recipes = request.POST.getlist('recipe-checkbox')
+            user = request.user
+            for recipe_id in selected_recipes:
+                recipe = Recipe.objects.get(pk=recipe_id)
 
-        return HttpResponseRedirect(reverse('recipes:list_recipe'))
+                user.recipes.remove(recipe)
+                messages.success(request, "Recipe(s) deleted successfully")
 
-
-@login_required
-def delete_recipe_from_account(request, pk):
-    if request.POST:
-        recipe = Recipe.objects.get(pk=pk)
-        user = request.user
-        user.recipes.remove(recipe)
-        messages.success(request, "Recipe deleted successfully")
-
-        return HttpResponseRedirect(reverse('recipes:user_recipes'))
+            return HttpResponseRedirect(reverse('recipes:user_recipes'))
 
 
 class IngredientListView(LoginRequiredMixin, ListView):
