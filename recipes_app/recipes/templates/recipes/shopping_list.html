@@ -1,14 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block content_title %}
+
+    <div class="d-flex justify-content-between" title="Add new recipe">
+        <h4>My shopping list</h4>
+    </div>
+
+{% endblock %}
 
 
 {% block content %}
+    <div class="card shadow">
+        <div class="card-body">
 
+            {% if not ingredient_list %}
+                <h6>
+                    You have not selected any recipes. You can select some recipes from your <a
+                        href="{% url 'recipes:user_recipes' %}">own recipes</a> or <a
+                        href="{% url 'recipes:list_recipe' %}">our recipes</a> collection.
+                </h6>
 
-    {% for key, ingredient_data in ingredient_list.items %}
-        {{ ingredient_data.ingredient.name }}
-        {{ ingredient_data.quantity }}
-        {{ ingredient_data.unit }}
-        <br>
-    {% endfor %}
+            {% else %}
+                <ul class="list-group list-group-flush shopping-list-list">
+                    {% for key, ingredient_data in ingredient_list.items %}
+
+                        <li class="list-group-item"><b>{{ ingredient_data.ingredient.name }}</b>
+                            <br>
+                            <i>{{ ingredient_data.quantity }}
+                                {{ ingredient_data.unit }}</i></li>
+
+                    {% endfor %}
+                </ul>
+
+            {% endif %}
+
+        </div>
+    </div>
 
 {% endblock %}

@@ -99,7 +99,7 @@ body {
     color: white;
 }
 
-.card {
+.card, .list-group-item {
     background-color: inherit;
 }
 
@@ -107,6 +107,7 @@ body.text-light .form-control:focus,
 body.text-light .form-control:active,
 body.text-light .form-control,
 body.text-light .input-group-text,
+body.text-light .list-group-item,
 body.text-light .modal-content,
 body.text-light .recipe-detail {
     background-color: inherit;

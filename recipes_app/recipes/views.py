@@ -28,7 +28,7 @@ class HomeView(ListView):
 
 @login_required
 def shopping_list(request):
-    pass
+    return render(request, 'recipes/shopping_list.html')
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
@@ -191,11 +191,14 @@ class UserRecipesView(LoginRequiredMixin, ListView):
         elif request.POST.get('delete'):
             selected_recipes = request.POST.getlist('recipe-checkbox')
             user = request.user
-            for recipe_id in selected_recipes:
-                recipe = Recipe.objects.get(pk=recipe_id)
+            if selected_recipes:
+                for recipe_id in selected_recipes:
+                    recipe = Recipe.objects.get(pk=recipe_id)
 
-                user.recipes.remove(recipe)
-                messages.success(request, "Recipe(s) deleted successfully")
+                    user.recipes.remove(recipe)
+                    messages.success(request, "Recipe(s) deleted successfully")
+            else:
+                messages.warning(request, "Please select a recipe first")
 
             return HttpResponseRedirect(reverse('recipes:user_recipes'))
 
