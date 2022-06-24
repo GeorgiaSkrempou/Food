@@ -20,5 +20,5 @@ urlpatterns = [
     path("list_ingredient/", IngredientListView.as_view(), name="list_ingredient"),
     path("update_ingredient/<int:pk>/", IngredientUpdateView.as_view(), name="update_ingredient"),
     path("delete_ingredient/<int:pk>/", IngredientDeleteView.as_view(), name="delete_ingredient"),
-    path("shopping_list/", shopping_list, name="shopping_list")
+    path("shopping_list/", shopping_list, name="shopping_list"),
 ]

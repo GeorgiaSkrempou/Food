@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import ModelFormMixin
@@ -28,9 +28,7 @@ class HomeView(ListView):
 
 @login_required
 def shopping_list(request):
-    ingredients_list = RecipeIngredient.objects.all()
-
-    return render(request, 'recipes/shopping_list.html', {'ingredients_list': ingredients_list})
+    pass
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
@@ -85,7 +83,7 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("recipes:detail_recipe", kwargs={"pk": pk})
 
 
-class RecipeListView(LoginRequiredMixin, ListView, ModelFormMixin):
+class RecipeListView(LoginRequiredMixin, ListView):
     model = Recipe
     #  change the query done by django to something more custom
     queryset = Recipe.objects.order_by('title')
@@ -94,8 +92,31 @@ class RecipeListView(LoginRequiredMixin, ListView, ModelFormMixin):
     paginate_by = 10
 
     def post(self, request, *args, **kwargs):
+        # if request.method == "POST":
+        #     print('poop')
+        # print(request.POST.getlist('recipe-checkbox'))
+        # print(request.POST.get('poop'))
+        # if request.POST.get('save'):
+        #     print('poop')
         if request.POST.get('save'):
-            print('poop')
+            context = request.POST.getlist('recipe-checkbox')
+            # return redirect(reverse('recipes:shopping_list'))
+            # ingredient_list=[]
+            # for recipe_id in context:
+
+            ingredient_list = RecipeIngredient.objects.filter(recipe_id__in=context)
+            unique_ingredient_list = {}
+            for ingredient_object in ingredient_list:
+                ingredient_id = ingredient_object.ingredient_id
+                if ingredient_object.ingredient_id not in unique_ingredient_list:
+                    unique_ingredient_list[ingredient_id] = {
+                        'ingredient': ingredient_object.ingredient,
+                        'quantity': 0,
+                        'unit': '',
+                    }
+                unique_ingredient_list[ingredient_id]['quantity'] += ingredient_object.quantity
+                unique_ingredient_list[ingredient_id]['unit'] = ingredient_object.unit
+            return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
 
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
