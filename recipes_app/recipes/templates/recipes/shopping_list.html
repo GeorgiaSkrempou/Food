@@ -3,13 +3,12 @@
 
 {% block content %}
 
-    {% for ingredient in ingredients_list %}
-        <p>Recipe name: {{ ingredient.recipe }}</p>
-        <p>Ingredient: {{ ingredient.ingredient.name }} {{ ingredient.quantity }} {{ ingredient.unit }}</p>
-        <p>Contains: {{ ingredient.ingredient.contains }}</p>
-        <hr>
 
-
+    {% for key, ingredient_data in ingredient_list.items %}
+        {{ ingredient_data.ingredient.name }}
+        {{ ingredient_data.quantity }}
+        {{ ingredient_data.unit }}
+        <br>
     {% endfor %}
 
 {% endblock %}

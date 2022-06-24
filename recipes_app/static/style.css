@@ -1,50 +1,55 @@
 body {
-font-size: .875rem;
+    font-size: 0.925rem;
+    font-family: 'Roboto Mono', monospace;
 }
+
 .ck-editor__editable_inline {
-min-height: 400px;
+    min-height: 400px;
 }
 
 #div_id_steps label {
-display: block;
+    display: block;
 }
 
 #cke_id_steps {
-width: auto !important;
+    width: auto !important;
 }
 
 #cke_id_ingredients {
-width: auto !important;
+    width: auto !important;
 }
 
 .django-ckeditor-widget {
-width: 100%;
+    width: 100%;
 }
 
 @media screen and (max-width: 1225px) and (min-width: 1045px) {
-    .priority-5{
-        display:none;
+    .priority-5 {
+        display: none;
     }
 }
 
 @media screen and (max-width: 1045px) and (min-width: 835px) {
-    .priority-5{
-        display:none;
+    .priority-5 {
+        display: none;
     }
-    .priority-4{
-        display:none;
+
+    .priority-4 {
+        display: none;
     }
 }
 
 @media screen and (max-width: 565px) and (min-width: 300px) {
-    .priority-5{
-        display:none;
+    .priority-5 {
+        display: none;
     }
-    .priority-4{
-        display:none;
+
+    .priority-4 {
+        display: none;
     }
-    .priority-3{
-        display:none;
+
+    .priority-3 {
+        display: none;
     }
 }
 
@@ -56,27 +61,30 @@ width: 100%;
 }
 
 @media screen and (max-width: 300px) {
-    .priority-5{
-        display:none;
+    .priority-5 {
+        display: none;
     }
-    .priority-4{
-        display:none;
+
+    .priority-4 {
+        display: none;
     }
-    .priority-3{
-        display:none;
+
+    .priority-3 {
+        display: none;
     }
-    .priority-2{
-        display:none;
+
+    .priority-2 {
+        display: none;
     }
 
 }
 
-.search-input{
+.search-input {
     background-color: rgba(56, 56, 56, 0.42);
     color: white;
 }
 
-.form-switch{
+.form-switch {
     margin-top: 0.45rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -87,7 +95,7 @@ width: 100%;
     border-right: 1px solid;
 }
 
-.sidebar-logo, .profile-logo{
+.sidebar-logo, .profile-logo {
     color: white;
 }
 
@@ -100,18 +108,18 @@ body.text-light .form-control:active,
 body.text-light .form-control,
 body.text-light .input-group-text,
 body.text-light .modal-content,
-body.text-light .recipe-detail{
+body.text-light .recipe-detail {
     background-color: inherit;
     color: white;
 }
 
-body.bg-dark .modal-content{
+body.bg-dark .modal-content {
     background-color: #212529;
 }
 
 
 body.text-light td svg,
-body.text-light .btn-edit-recipe svg{
+body.text-light .btn-edit-recipe svg {
     stroke: white;
     stroke-width: 1.75;
 }
