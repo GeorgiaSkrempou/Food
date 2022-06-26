@@ -29,7 +29,7 @@ SECRET_KEY = os.environ['DJANGO_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['DEBUG']
 
-ALLOWED_HOSTS = ['recipes.sbs.lol', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['foodie.sbs.lol', '127.0.0.1', 'localhost']
 
 AUTH_USER_MODEL = 'user.Account'
 
