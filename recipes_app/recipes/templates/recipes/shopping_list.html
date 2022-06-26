@@ -27,8 +27,12 @@
 
                         <li class="list-group-item"><b>{{ ingredient_data.ingredient.name }}</b>
                             <br>
-                            <i>{{ ingredient_data.quantity }}
-                                {{ ingredient_data.unit }}</i></li>
+                            {{ ingredient_data.quantity }}
+                                {{ ingredient_data.unit }}
+                            <br>
+                            {% if ingredient_data.ingredient.contains %}
+                                <i>({{ ingredient_data.ingredient.contains }})</i>
+                            {% endif %}</li>
 
                     {% endfor %}
                 </ul>

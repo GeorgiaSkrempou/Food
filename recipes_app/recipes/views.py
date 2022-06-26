@@ -1,4 +1,5 @@
 import random
+import time
 from datetime import datetime
 
 import pytz
@@ -6,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -83,56 +85,46 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("recipes:detail_recipe", kwargs={"pk": pk})
 
 
-class RecipeListView(LoginRequiredMixin, ListView):
-    model = Recipe
-    #  change the query done by django to something more custom
-    queryset = Recipe.objects.order_by('title')
-    #  replaces the object_list with recipe_list
-    context_object_name = 'recipe_list'
-    paginate_by = 10
+@login_required
+def recipe_list(request):
+    recipes = Recipe.objects.order_by('title')
+    paginator = Paginator(recipes, 10)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
 
-    def post(self, request, *args, **kwargs):
+    if request.POST.get('shop'):
+        selected_recipes = request.POST.getlist('recipe-checkbox')
 
-        if request.POST.get('shop'):
-            selected_recipes = request.POST.getlist('recipe-checkbox')
+        if selected_recipes:
+            unique_ingredient_list = add_ingredient_quantities(selected_recipes=selected_recipes)
+            return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
+        else:
+            messages.warning(request, "Please select a recipe first")
+            return HttpResponseRedirect(reverse('recipes:user_recipes'))
 
-            if selected_recipes:
-                unique_ingredient_list = add_ingredient_quantities(selected_recipes=selected_recipes)
-                return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
-            else:
-                messages.warning(request, "Please select a recipe first")
-                return HttpResponseRedirect(reverse('recipes:list_recipe'))
-
-        elif request.POST.get('delete'):
-            selected_recipes = request.POST.getlist('recipe-checkbox')
-            Recipe.objects.filter(id__in=selected_recipes).delete()
-
-            if selected_recipes:
-                messages.success(request, "Recipe(s) deleted successfully")
-            else:
-                messages.warning(request, "Please select a recipe first")
-
-            return HttpResponseRedirect(reverse('recipes:list_recipe'))
-
-        elif request.POST.get('add-to-my-recipes'):
-            selected_recipes = request.POST.getlist('recipe-checkbox')
-            user = request.user
-
-            message_was_shown = False
+    elif request.POST.get('delete'):
+        selected_recipes = request.POST.getlist('recipe-checkbox')
+        if selected_recipes:
             for recipe_id in selected_recipes:
                 recipe = Recipe.objects.get(pk=recipe_id)
 
-                if not user.recipes.filter(id=recipe_id):
-                    user.recipes.add(recipe)
-                    if message_was_shown is False:
-                        messages.success(request, "Recipe(s) added successfully")
-                        message_was_shown = True
-                else:
-                    if message_was_shown is False:
-                        messages.warning(request, "Recipe(s) already in your account")
-                        message_was_shown = True
+                recipes.remove(recipe)
+                messages.success(request, "Recipe(s) deleted successfully")
+        else:
+            messages.warning(request, "Please select a recipe first")
 
-            return HttpResponseRedirect(reverse('recipes:list_recipe'))
+        return HttpResponseRedirect(reverse('recipes:user_recipes'))
+
+    context = {
+        'recipes_list': recipes,
+        'page_obj': page_obj,
+        'load_more_url': 'recipes:list_recipe',
+        'show_edit_btn': True,
+    }
+
+    if request.htmx:
+        return render(request, template_name='recipes/recipes_table.html', context=context)
+    return render(request, template_name='recipes/recipe_list.html', context=context)
 
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
@@ -148,26 +140,20 @@ class RecipeDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     success_message = "Recipe deleted successfully"
 
 
-class UserRecipesView(LoginRequiredMixin, ListView):
-    model = Recipe
-    template_name = 'recipes/user_recipes.html'
-    queryset = Recipe.objects.order_by('title')
+@login_required
+def user_recipes_list(request):
+    user = request.user
+    user_recipes = Recipe.objects.filter(user=user).order_by('title')
+    paginator = Paginator(user_recipes, 10)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
 
-    paginate_by = 10
+    def get_random_recipe():
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(UserRecipesView, self).get_context_data(*args, **kwargs)
-        context["random_recipe"] = self.get_random_recipe()
-        return context
-
-    def get_queryset(self):
-        return Recipe.objects.filter(user=self.request.user).all()
-
-    def get_random_recipe(self):
         current_date = datetime.now(pytz.timezone('Europe/Amsterdam'))
         # tomorrow = current_date + timedelta(days=5)
         num_date_time = int(current_date.strftime('%d%m%Y'))
-        recipes_list = Recipe.objects.filter(user=self.request.user).all()
+        recipes_list = Recipe.objects.filter(user=user).all()
         random.seed(num_date_time)
         if not recipes_list:
             return None
@@ -176,31 +162,40 @@ class UserRecipesView(LoginRequiredMixin, ListView):
 
         return random_recipe
 
-    def post(self, request, *args, **kwargs):
+    if request.POST.get('shop'):
+        selected_recipes = request.POST.getlist('recipe-checkbox')
 
-        if request.POST.get('shop'):
-            selected_recipes = request.POST.getlist('recipe-checkbox')
-
-            if selected_recipes:
-                unique_ingredient_list = add_ingredient_quantities(selected_recipes=selected_recipes)
-                return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
-            else:
-                messages.warning(request, "Please select a recipe first")
-                return HttpResponseRedirect(reverse('recipes:user_recipes'))
-
-        elif request.POST.get('delete'):
-            selected_recipes = request.POST.getlist('recipe-checkbox')
-            user = request.user
-            if selected_recipes:
-                for recipe_id in selected_recipes:
-                    recipe = Recipe.objects.get(pk=recipe_id)
-
-                    user.recipes.remove(recipe)
-                    messages.success(request, "Recipe(s) deleted successfully")
-            else:
-                messages.warning(request, "Please select a recipe first")
-
+        if selected_recipes:
+            unique_ingredient_list = add_ingredient_quantities(selected_recipes=selected_recipes)
+            return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
+        else:
+            messages.warning(request, "Please select a recipe first")
             return HttpResponseRedirect(reverse('recipes:user_recipes'))
+
+    elif request.POST.get('delete'):
+        selected_recipes = request.POST.getlist('recipe-checkbox')
+        # user = request.user
+        if selected_recipes:
+            for recipe_id in selected_recipes:
+                recipe = Recipe.objects.get(pk=recipe_id)
+
+                user.recipes.remove(recipe)
+                messages.success(request, "Recipe(s) deleted successfully")
+        else:
+            messages.warning(request, "Please select a recipe first")
+
+        return HttpResponseRedirect(reverse('recipes:user_recipes'))
+
+    random_recipe = get_random_recipe()
+    context = {'recipes_list': user_recipes,
+               'random_recipe': random_recipe,
+               'page_obj': page_obj,
+               'load_more_url': 'recipes:user_recipes',
+               'show_edit_btn': False}
+
+    if request.htmx:
+        return render(request, template_name='recipes/recipes_table.html', context=context)
+    return render(request, template_name='recipes/user_recipes.html', context=context)
 
 
 class IngredientListView(LoginRequiredMixin, ListView):

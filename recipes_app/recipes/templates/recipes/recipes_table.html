@@ -1,0 +1,80 @@
+{% for recipe in page_obj %}
+    <tr>
+        <td class="priority-1 text-center align-middle">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="{{ recipe.id }}"
+                       name="recipe-checkbox">
+                <label class="form-check-label" for="recipe-checkbox-{{ recipe.id }}">
+
+                    <a href="{% url 'recipes:detail_recipe' recipe.id %}">{{ recipe.title }}</a>
+                </label>
+            </div>
+        </td>
+        <td class="priority-3 text-center align-middle">
+            {{ recipe.description }}
+        </td>
+        <td class="priority-3 text-center align-middle">
+            {{ recipe.filters }}
+        </td>
+        {% if show_edit_btn == True %}
+            <td class="priority-1 text-end align-middle">
+                <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe"
+                   class="text-decoration-none btn btn-primary btn-sm">
+                    <i class="bi bi-pen"></i>
+                </a>
+            </td>
+        {% endif %}
+
+    </tr>
+
+{% endfor %}
+
+{% if page_obj.has_next %}
+
+    <tr id="load-more">
+        <td {% if show_edit_btn == True %}colspan="4" {% else %} colspan="3" {% endif %} class="text-center">
+            <button class="btn btn-primary btn-sm"
+                    hx-get="{% url load_more_url %}?page={{ page_obj.next_page_number }}"
+                    hx-target="#load-more"
+                    hx-swap="outerHTML"
+            >
+                <svg class="htmx-indicator my-indicator" width="40" height="10" viewBox="0 0 120 30"
+                     xmlns="http://www.w3.org/2000/svg" fill="#fff">
+                    <circle cx="15" cy="15" r="15">
+                        <animate attributeName="r" from="15" to="15"
+                                 begin="0s" dur="0.8s"
+                                 values="15;9;15" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                        <animate attributeName="fill-opacity" from="1" to="1"
+                                 begin="0s" dur="0.8s"
+                                 values="1;.5;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="60" cy="15" r="9" fill-opacity="0.3">
+                        <animate attributeName="r" from="9" to="9"
+                                 begin="0s" dur="0.8s"
+                                 values="9;15;9" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                        <animate attributeName="fill-opacity" from="0.5" to="0.5"
+                                 begin="0s" dur="0.8s"
+                                 values=".5;1;.5" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="105" cy="15" r="15">
+                        <animate attributeName="r" from="15" to="15"
+                                 begin="0s" dur="0.8s"
+                                 values="15;9;15" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                        <animate attributeName="fill-opacity" from="1" to="1"
+                                 begin="0s" dur="0.8s"
+                                 values="1;.5;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+
+
+                Load more
+            </button>
+        </td>
+    </tr>
+{% endif %}

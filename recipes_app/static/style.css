@@ -123,7 +123,6 @@ body.bg-dark .modal-content {
     background-color: #212529;
 }
 
-
 body.text-light td svg,
 body.text-light .btn-edit-recipe svg {
     stroke: white;
@@ -132,4 +131,14 @@ body.text-light .btn-edit-recipe svg {
 
 .sidebar .dropdown-toggle {
     color: white;
+}
+
+.htmx-indicator{
+    display:none;
+}
+.htmx-request .my-indicator{
+    display:inline;
+}
+.htmx-request.my-indicator{
+    display:inline;
 }
