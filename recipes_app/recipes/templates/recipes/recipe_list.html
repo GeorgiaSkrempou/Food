@@ -20,7 +20,7 @@
     <div class="card shadow">
         <div class="card-body">
 
-            {% if not recipe_list %}
+            {% if not recipes_list %}
                 <h6>
                     No recipes exist yet. You can add a new recipe
                     <a href="{% url 'recipes:add_recipe' %}">here</a>.
@@ -44,43 +44,7 @@
                         </thead>
                         <tbody class="table-group-divider">
 
-                        {% for recipe in recipe_list %}
-                            <tr>
-                                <td class="priority-1 text-center align-middle">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{ recipe.id }}"
-                                               name="recipe-checkbox">
-                                        <label class="form-check-label" for="recipe-checkbox-{{ recipe.id }}">
-                                            <a href="{% url 'recipes:detail_recipe' recipe.id %}"
-                                               title="See recipe details">{{ recipe.title }}</a>
-                                        </label>
-                                    </div>
-
-                                </td>
-                                <td class="priority-3 text-center align-middle">
-                                    {{ recipe.description }}
-                                </td>
-                                <td class="priority-3 text-center align-middle">
-                                    {{ recipe.filters }}
-                                </td>
-                                <td class="priority-1 text-end align-middle">
-
-                                    <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe"
-                                       class="text-decoration-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-                                            <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
-                                            <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                                        </svg>
-                                    </a>
-
-
-                                </td>
-                            </tr>
-
-                        {% endfor %}
+                        {% include 'recipes/recipes_table.html' with load_more_url="recipes:list_recipe" %}
 
                         </tbody>
 
@@ -138,33 +102,34 @@
 
 
             {% endif %}
-            {% if is_paginated %}
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                        <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-link">&laquo;</a></li>
-                    {% else %}
-                        <li class="disabled btn btn-link"><span>&laquo;</span></li>
-                    {% endif %}
-                    {% for i in paginator.page_range %}
-                        {% if page_obj.number == i %}
-                            <li class="active btn btn-link"><span>{{ i }} <span class="sr-only"></span></span></li>
-                        {% else %}
-                            <li><a href="?page={{ i }}" class="btn btn-link">{{ i }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    {% if page_obj.has_next %}
-                        <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-link">&raquo;</a></li>
-                    {% else %}
-                        <li class="disabled btn btn-link"><span>&raquo;</span></li>
-                    {% endif %}
-                </ul>
-            {% endif %}
+            {#            {% if is_paginated %}#}
+            {#                <ul class="pagination">#}
+            {#                    {% if page_obj.has_previous %}#}
+            {#                        <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-link">&laquo;</a></li>#}
+            {#                    {% else %}#}
+            {#                        <li class="disabled btn btn-link"><span>&laquo;</span></li>#}
+            {#                    {% endif %}#}
+            {#                    {% for i in paginator.page_range %}#}
+            {#                        {% if page_obj.number == i %}#}
+            {#                            <li class="active btn btn-link"><span>{{ i }} <span class="sr-only"></span></span></li>#}
+            {#                        {% else %}#}
+            {#                            <li><a href="?page={{ i }}" class="btn btn-link">{{ i }}</a></li>#}
+            {#                        {% endif %}#}
+            {#                    {% endfor %}#}
+            {#                    {% if page_obj.has_next %}#}
+            {#                        <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-link">&raquo;</a></li>#}
+            {#                    {% else %}#}
+            {#                        <li class="disabled btn btn-link"><span>&raquo;</span></li>#}
+            {#                    {% endif %}#}
+            {#                </ul>#}
+            {#            {% endif %}#}
         </div>
     </div>
 {% endblock %}
 
 {% block javascript %}
-    {% if recipe_list %}
+    {% if recipes_list %}
         <script src="{% static 'app.js' %}"></script>
+        <script src="{% static 'htmx.min.js' %}"></script>
     {% endif %}
 {% endblock %}
