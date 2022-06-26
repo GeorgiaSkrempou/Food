@@ -23,6 +23,8 @@ body {
     width: 100%;
 }
 
+
+
 @media screen and (max-width: 1225px) and (min-width: 1045px) {
     .priority-5 {
         display: none;
@@ -99,6 +101,10 @@ body {
     color: white;
 }
 
+#hint_id_password1, #hint_id_password2 {
+    color: inherit !important;
+}
+
 .card, .list-group-item {
     background-color: inherit;
 }
@@ -124,11 +130,6 @@ body.text-light .btn-edit-recipe svg {
     stroke: white;
     stroke-width: 1.75;
 }
-
-/*body.text-light svg {*/
-/*    stroke: white;*/
-/*    stroke-width: 1;*/
-/*}*/
 
 .sidebar .dropdown-toggle {
     color: white;
