@@ -30,55 +30,92 @@
                     <input type="text" class="form-control" placeholder="Search in ingredients" aria-label="Username"
                            aria-describedby="basic-addon1" id="searchInput" onkeyup="search()">
                 </div>
+                <form action="" method="POST">
+                    {% csrf_token %}
 
-                <table class="table table-hover recipe-list" id="recipe-list">
-                    <thead>
-                    <tr>
-                        <th class="priority-1 text-center" scope="col">Ingredient</th>
-                        <th class="priority-3 text-center" scope="col">Contains</th>
-                        <th class="priority-3 text-center" scope="col"></th>
+                    <table class="table table-hover recipe-list" id="recipe-list">
+                        <thead>
+                        <tr>
+                            <th class="priority-1 text-center" scope="col">Ingredient</th>
+                            <th class="priority-3 text-center" scope="col">Contains</th>
+                            <th class="priority-3 text-center" scope="col"></th>
 
 
-                    </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
 
-                    {% include 'recipes/ingredients_table.html' %}
+                        {% include 'recipes/ingredients_table.html' with load_more_url="recipes:list_ingredient" %}
 
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
+
+                    <!-- Button trigger modal -->
+
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#recipe-modal-{{ ingredient.id }}"
+                       title="Delete ingredient" class="text-decoration-none btn btn-outline-primary">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="recipe-modal-{{ ingredient.id }}" tabindex="-1"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete Ingredient</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete {{ ingredient.name }}?
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="submit" class="btn btn-danger" name="delete" value="delete">Delete</button>
+                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
 
 
             {% endif %}
-            {% if is_paginated %}
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                        <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-link">&laquo;</a></li>
-                    {% else %}
-                        <li class="disabled btn btn-link"><span>&laquo;</span></li>
-                    {% endif %}
-                    {% for i in paginator.page_range %}
-                        {% if page_obj.number == i %}
-                            <li class="active btn btn-link"><span>{{ i }} <span class="sr-only"></span></span></li>
-                        {% else %}
-                            <li><a href="?page={{ i }}" class="btn btn-link">{{ i }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    {% if page_obj.has_next %}
-                        <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-link">&raquo;</a></li>
-                    {% else %}
-                        <li class="disabled btn btn-link"><span>&raquo;</span></li>
-                    {% endif %}
-                </ul>
-            {% endif %}
+{#            {% if is_paginated %}#}
+{#                <ul class="pagination">#}
+{#                    {% if page_obj.has_previous %}#}
+{#                        <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-link">&laquo;</a></li>#}
+{#                    {% else %}#}
+{#                        <li class="disabled btn btn-link"><span>&laquo;</span></li>#}
+{#                    {% endif %}#}
+{#                    {% for i in paginator.page_range %}#}
+{#                        {% if page_obj.number == i %}#}
+{#                            <li class="active btn btn-link"><span>{{ i }} <span class="sr-only"></span></span></li>#}
+{#                        {% else %}#}
+{#                            <li><a href="?page={{ i }}" class="btn btn-link">{{ i }}</a></li>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                    {% if page_obj.has_next %}#}
+{#                        <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-link">&raquo;</a></li>#}
+{#                    {% else %}#}
+{#                        <li class="disabled btn btn-link"><span>&raquo;</span></li>#}
+{#                    {% endif %}#}
+{#                </ul>#}
+{#            {% endif %}#}
         </div>
     </div>
 {% endblock %}
 
 {% block javascript %}
-    {% if ingredient_list %}
+{#    {% if ingredient_list %}#}
         <script src="{% static 'app.js' %}"></script>
+        <script src="{% static 'htmx.min.js' %}"></script>
 
-    {% endif %}
+
+{#    {% endif %}#}
 {% endblock %}
