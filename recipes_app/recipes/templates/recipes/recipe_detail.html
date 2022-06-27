@@ -37,35 +37,20 @@
         <tr>
             <th scope="row">Ingredients</th>
             <td>
-                <table>
-                    <tbody>
-                    {% for ingredient_set in recipe.recipeingredient_set.all %}
-                        <tr>
 
-                            <th scope="row">{{ ingredient_set.ingredient.name }}</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ ingredient_set.quantity }} {{ ingredient_set.unit }}
-                            </td>
-                        </tr>
-                        {% if ingredient_set.ingredient.contains %}
-                            <tr>
-                                <td>
-                                    <i>({{ ingredient_set.ingredient.contains }})</i>
-                                </td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+                {% for ingredient_set in recipe.recipeingredient_set.all %}
 
-
+                    <b>{{ ingredient_set.ingredient.name }}</b>
+                    <br>
+                    {{ ingredient_set.quantity }} {{ ingredient_set.unit }}
+                    <br>
+                    <br>
+                    {% if ingredient_set.ingredient.contains %}
+                        <i>({{ ingredient_set.ingredient.contains }})</i>
+                    {% endif %}
+                {% endfor %}
             </td>
-
-
         </tr>
-
 
         <tr>
             <th scope="row">Steps</th>
