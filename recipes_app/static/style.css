@@ -104,7 +104,7 @@ body {
     color: inherit !important;
 }
 
-.card, .list-group-item {
+.card {
     background-color: inherit;
 }
 
@@ -116,7 +116,7 @@ body.text-light .list-group-item,
 body.text-light .modal-content,
 body.text-light .recipe-detail {
     background-color: inherit;
-    color: white;
+    color: inherit;
 }
 
 body.bg-dark .modal-content {
@@ -133,16 +133,16 @@ body.text-light .btn-edit-recipe svg {
     color: white;
 }
 
-.htmx-indicator{
+.htmx-indicator {
     display:none;
 }
-.htmx-request .my-indicator{
+.htmx-request .my-indicator {
     display:inline;
 }
-.htmx-request.my-indicator{
+.htmx-request.my-indicator {
     display:inline;
 }
 
-.nav-link{
+.nav-link {
     padding: 0.5rem!important;
 }
