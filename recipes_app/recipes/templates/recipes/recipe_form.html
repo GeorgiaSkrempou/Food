@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
+{% load custom_tags %}
+
+{% block form_stylesheets %}
+    <link rel="stylesheet" href="{% static 'nice-select/css/nice-select2.css' %}">
+{% endblock %}
 
 {% block content_title %}
     <h4>Add/Edit recipe</h4>
@@ -21,23 +27,34 @@
 
         <div class="collapse" id="ingredient-list">
             {% for form in recipe_ingredient %}
+                {{ form.id|as_crispy_field }}
                 <div class="ingredient-form mt-2">
-                    {{ form|crispy }}
-{#                    {{ form.recipe|as_crispy_field }}#}
-{#                    <div class="row">#}
-{#                        <div class="col">#}
-{#                            {{ form.ingredient|as_crispy_field }}#}
-{#                        </div>#}
-{#                        <div class="col">#}
-{#                            {{ form.quantity|as_crispy_field }}#}
-{#                        </div>#}
-{#                        <div class="col">#}
-{#                            {{ form.unit|as_crispy_field }}#}
-{#                        </div>#}
-{#                        <div class="col mt-4 pt-2 align-middle">#}
-{#                            {{ form.DELETE|as_crispy_field }}#}
-{#                        </div>#}
-{#                    </div>#}
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-4">
+                                <label class="form-label requiredField">Ingredient*</label>
+                                {% if form.errors.ingredient %}
+                                    {{ form.ingredient|add_classes:"is-invalid mb-1" }}
+                                    {% for error in form.ingredient.errors %}
+                                        <p class="invalid-feedback">
+                                            <strong>{{ error }}</strong>
+                                        </p>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.ingredient|add_classes:"mb-1" }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col">
+                            {{ form.quantity|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.unit|as_crispy_field }}
+                        </div>
+                        <div class="col mt-4 pt-2 align-middle">
+                            {{ form.DELETE|as_crispy_field }}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
             <button class="btn btn-outline-primary" id="add-ingredient"><i class="bi bi-plus-square"></i></button>
@@ -49,6 +66,7 @@
 {% endblock %}
 
 {% block javascript %}
+    <script src="{% static 'nice-select/js/nice-select2.js' %}"></script>
     <script>
         let ingredientForm = document.querySelectorAll(".ingredient-form");
         let container = document.querySelector("#ingredient-list");
@@ -67,6 +85,18 @@
             container.insertBefore(newForm, addButton);
 
             totalForms.setAttribute('value', `${formNum + 1}`);
+            let oldSelect = newForm.querySelectorAll('.nice-select')[0];
+            oldSelect.parentNode.removeChild(oldSelect);
+
+            let newSelect = newForm.querySelectorAll('select')[0];
+            NiceSelect.bind(newSelect, {searchable: true});
         });
+
+        let selects = document.getElementsByTagName("select");
+        [...selects].forEach(select => {
+            if (select.getAttribute('name').includes('recipeingredient')) {
+                NiceSelect.bind(select, {searchable: true});
+            }
+        })
     </script>
 {% endblock %}

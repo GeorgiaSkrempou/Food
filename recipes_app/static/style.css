@@ -146,3 +146,12 @@ body.text-light .btn-edit-recipe svg {
 .nav-link {
     padding: 0.5rem!important;
 }
+
+.nice-select {
+    width: 100% !important;
+    display: block !important;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
