@@ -1,0 +1,103 @@
+{% for ingredient in ingredient_list %}
+    <tr>
+        <td class="priority-1 text-center align-middle">
+            {{ ingredient.name }}
+        </td>
+        <td class="priority-3 text-center align-middle">
+            {{ ingredient.contains }}
+        </td>
+
+        <td class="priority-1 text-end align-middle">
+
+
+            <a href="{% url 'recipes:update_ingredient' ingredient.id %}" title="Edit ingredient"
+               class="text-decoration-none btn btn-primary btn-sm">
+                <i class="bi bi-pen"></i>
+            </a>
+
+            <!-- Button trigger modal -->
+
+            <a href="#" data-bs-toggle="modal" data-bs-target="#recipe-modal-{{ ingredient.id }}"
+               title="Delete ingredient" class="text-decoration-none btn btn-primary btn-sm">
+                <i class="bi bi-trash"></i>
+            </a>
+        </td>
+    </tr>
+    <!-- Modal -->
+    <div class="modal fade" id="recipe-modal-{{ ingredient.id }}" tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Ingredient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete {{ ingredient.name }}?
+                </div>
+                <div class="modal-footer">
+                    <form action="{% url 'recipes:delete_ingredient' ingredient.id %}"
+                          method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% if page_obj.has_next %}
+
+    <tr id="load-more">
+        <td {% if show_edit_btn == True %}colspan="4" {% else %} colspan="3" {% endif %} class="text-center">
+            <button class="btn btn-primary btn-sm"
+                    hx-get="{% url load_more_url %}?page={{ page_obj.next_page_number }}"
+                    hx-target="#load-more"
+                    hx-swap="outerHTML"
+            >
+                <svg class="htmx-indicator my-indicator" width="40" height="10" viewBox="0 0 120 30"
+                     xmlns="http://www.w3.org/2000/svg" fill="#fff">
+                    <circle cx="15" cy="15" r="15">
+                        <animate attributeName="r" from="15" to="15"
+                                 begin="0s" dur="0.8s"
+                                 values="15;9;15" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                        <animate attributeName="fill-opacity" from="1" to="1"
+                                 begin="0s" dur="0.8s"
+                                 values="1;.5;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="60" cy="15" r="9" fill-opacity="0.3">
+                        <animate attributeName="r" from="9" to="9"
+                                 begin="0s" dur="0.8s"
+                                 values="9;15;9" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                        <animate attributeName="fill-opacity" from="0.5" to="0.5"
+                                 begin="0s" dur="0.8s"
+                                 values=".5;1;.5" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="105" cy="15" r="15">
+                        <animate attributeName="r" from="15" to="15"
+                                 begin="0s" dur="0.8s"
+                                 values="15;9;15" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                        <animate attributeName="fill-opacity" from="1" to="1"
+                                 begin="0s" dur="0.8s"
+                                 values="1;.5;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+
+
+                Load more
+            </button>
+        </td>
+    </tr>
+{% endif %}
