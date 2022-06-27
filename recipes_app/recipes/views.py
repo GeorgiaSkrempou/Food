@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
@@ -30,7 +30,7 @@ class HomeView(ListView):
 
 @login_required
 def shopping_list(request):
-    return render(request, 'recipes/shopping_list.html')
+    return render(request, template_name='404.html')
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
