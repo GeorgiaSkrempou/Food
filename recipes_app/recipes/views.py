@@ -88,6 +88,7 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
 @login_required
 def recipe_list(request):
     recipes = Recipe.objects.order_by('title')
+    user = request.user
     paginator = Paginator(recipes, 10)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
@@ -100,20 +101,34 @@ def recipe_list(request):
             return render(request, 'recipes/shopping_list.html', {'ingredient_list': unique_ingredient_list})
         else:
             messages.warning(request, "Please select a recipe first")
-            return HttpResponseRedirect(reverse('recipes:user_recipes'))
+            return HttpResponseRedirect(reverse('recipes:list_recipe'))
+
+    elif request.POST.get('add-to-my-recipes'):
+        selected_recipes = request.POST.getlist('recipe-checkbox')
+
+        if selected_recipes:
+            for recipe_id in selected_recipes:
+                recipe = Recipe.objects.get(pk=recipe_id)
+                user_recipes = Recipe.objects.filter(user=user).order_by('title')
+                if recipe not in user_recipes:
+                    recipe.user.add(user)
+                    messages.success(request, f"{recipe.title} successfully added to your account")
+                else:
+                    messages.warning(request, f"{recipe.title} already in your account")
+        else:
+            messages.warning(request, "Please select a recipe first")
 
     elif request.POST.get('delete'):
         selected_recipes = request.POST.getlist('recipe-checkbox')
         if selected_recipes:
             for recipe_id in selected_recipes:
                 recipe = Recipe.objects.get(pk=recipe_id)
-
-                recipes.remove(recipe)
-                messages.success(request, "Recipe(s) deleted successfully")
+                recipe.delete()
+                messages.success(request, f"{recipe.title} deleted successfully")
         else:
             messages.warning(request, "Please select a recipe first")
 
-        return HttpResponseRedirect(reverse('recipes:user_recipes'))
+        return HttpResponseRedirect(reverse('recipes:list_recipe'))
 
     context = {
         'recipes_list': recipes,
@@ -129,15 +144,6 @@ def recipe_list(request):
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
-
-
-class RecipeDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-    model = Recipe
-
-    def get_success_url(self):
-        return reverse("recipes:list_recipe")
-
-    success_message = "Recipe deleted successfully"
 
 
 @login_required
@@ -178,9 +184,8 @@ def user_recipes_list(request):
         if selected_recipes:
             for recipe_id in selected_recipes:
                 recipe = Recipe.objects.get(pk=recipe_id)
-
-                user.recipes.remove(recipe)
-                messages.success(request, "Recipe(s) deleted successfully")
+                recipe.user.remove(user)
+                messages.success(request, f"{recipe.title} deleted successfully")
         else:
             messages.warning(request, "Please select a recipe first")
 
@@ -200,7 +205,6 @@ def user_recipes_list(request):
 
 class IngredientListView(LoginRequiredMixin, ListView):
     model = Ingredient
-    #  change the query done by django to something more custom
     queryset = Ingredient.objects.order_by('name')
     context_object_name = 'ingredient_list'
     paginate_by = 10
