@@ -203,6 +203,17 @@ def user_recipes_list(request):
     return render(request, template_name='recipes/user_recipes.html', context=context)
 
 
+
+@login_required
+def ingredient_list(request):
+    ingredients = Ingredient.objects.order_by('name')
+    paginator = Paginator(ingredients, 10)
+
+
+
+
+
+
 class IngredientListView(LoginRequiredMixin, ListView):
     model = Ingredient
     queryset = Ingredient.objects.order_by('name')
