@@ -34,9 +34,8 @@
                         </thead>
                         <tbody class="table-group-divider">
 
-{#                        {% with load_more_url as "recipes:user_recipes" %}#}
                             {% include 'recipes/recipes_table.html' with load_more_url="recipes:user_recipes" %}
-{#                        {% endwith %}#}
+
 
                         </tbody>
                     </table>

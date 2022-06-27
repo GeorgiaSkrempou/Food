@@ -203,22 +203,32 @@ def user_recipes_list(request):
     return render(request, template_name='recipes/user_recipes.html', context=context)
 
 
-
 @login_required
-def ingredient_list(request):
-    ingredients = Ingredient.objects.order_by('name')
-    paginator = Paginator(ingredients, 10)
+def ingredient_list_view(request):
+    ingredient_list = Ingredient.objects.order_by('name')
+    paginator = Paginator(ingredient_list, 10)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
 
+    if request.POST.get('delete'):
+        selected_ingredients = request.POST.getlist('recipe-checkbox')
+        if selected_ingredients:
+            for ingredient_id in selected_ingredients:
+                ingredient = Ingredient.objects.get(pk=ingredient_id)
+                ingredient.delete()
+                messages.success(request, f"{ingredient.name} deleted successfully")
+        else:
+            messages.warning(request, "Please select an ingredient first")
 
+        return HttpResponseRedirect(reverse('recipes:list_ingredient'))
 
+    context = {'ingredient_list': ingredient_list,
+               'page_obj': page_obj,
+               'load_more_url': 'recipes:list_ingredient'}
 
-
-
-class IngredientListView(LoginRequiredMixin, ListView):
-    model = Ingredient
-    queryset = Ingredient.objects.order_by('name')
-    context_object_name = 'ingredient_list'
-    paginate_by = 10
+    if request.htmx:
+        return render(request, template_name='recipes/ingredients_table.html', context=context)
+    return render(request, template_name='recipes/ingredient_list.html', context=context)
 
 
 class IngredientCreateView(LoginRequiredMixin, CreateView):
@@ -233,10 +243,10 @@ class IngredientUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('recipes:list_ingredient')
 
 
-class IngredientDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-    model = Ingredient
-
-    def get_success_url(self):
-        return reverse("recipes:list_ingredient")
-
-    success_message = "Ingredient deleted successfully"
+# class IngredientDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+#     model = Ingredient
+#
+#     def get_success_url(self):
+#         return reverse("recipes:list_ingredient")
+#
+#     success_message = "Ingredient deleted successfully"
