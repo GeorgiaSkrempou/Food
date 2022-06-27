@@ -43,8 +43,9 @@
                     <b>{{ ingredient_set.ingredient.name }}</b>
                     <br>
                     {{ ingredient_set.quantity }} {{ ingredient_set.unit }}
-                    <br>
+
                     {% if ingredient_set.ingredient.contains %}
+                        <br>
                         <i>({{ ingredient_set.ingredient.contains }})</i>
                     {% endif %}
                     <br>
