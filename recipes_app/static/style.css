@@ -87,8 +87,8 @@ body {
 
 .form-switch {
     margin-top: 0.45rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 0!important;
+    margin-right: 0!important;
 }
 
 .sidebar {
@@ -141,4 +141,8 @@ body.text-light .btn-edit-recipe svg {
 }
 .htmx-request.my-indicator{
     display:inline;
+}
+
+.nav-link{
+    padding: 0.5rem!important;
 }
