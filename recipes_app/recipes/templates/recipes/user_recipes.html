@@ -12,16 +12,9 @@
             {% if not recipes_list %}
                 <h6>
                     You currently don't have any recipes saved in your account. You can add recipes from the
-                    <a href="{% url 'recipes:list_recipe' %}">recipe list</a>
-                    .
+                    <a href="{% url 'recipes:list_recipe' %}">recipe list</a>.
                 </h6>
             {% else %}
-
-                {#                <form action="" method="GET">#}
-                {#                    <input type="text" name="search_term" value="{{ request.GET.title }}">#}
-                {#                    <input class="button" type="submit" value="Search">#}
-                {#                </form>#}
-
 
                 <div class="input-group mb-3 py-2">
                     <span class="input-group-text search-input" id="basic-addon1">Search</span>
