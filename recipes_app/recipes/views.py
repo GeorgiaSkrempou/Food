@@ -241,12 +241,3 @@ class IngredientUpdateView(LoginRequiredMixin, UpdateView):
     model = Ingredient
     fields = '__all__'
     success_url = reverse_lazy('recipes:list_ingredient')
-
-
-# class IngredientDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-#     model = Ingredient
-#
-#     def get_success_url(self):
-#         return reverse("recipes:list_ingredient")
-#
-#     success_message = "Ingredient deleted successfully"
