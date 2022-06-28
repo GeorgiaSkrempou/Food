@@ -54,6 +54,9 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         if ingredient.is_valid():
             ingredient.instance = self.object
             ingredient.save()
+        else:
+            messages.error(self.request, "Please fill in the ingredients form correctly")
+            return self.render_to_response(self.get_context_data(form=form))
         return super().form_valid(form)
 
 
@@ -77,6 +80,7 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
             ingredient.instance = self.object
             ingredient.save()
         else:
+            messages.error(self.request, "Please fill in the ingredients form correctly")
             return self.render_to_response(self.get_context_data(form=form))
         return super().form_valid(form)
 
@@ -112,9 +116,9 @@ def recipe_list(request):
                 user_recipes = Recipe.objects.filter(user=user).order_by('title')
                 if recipe not in user_recipes:
                     recipe.user.add(user)
-                    messages.success(request, f"{recipe.title} successfully added to your account")
+                    messages.success(request, f"{recipe.title} was successfully added to your account")
                 else:
-                    messages.warning(request, f"{recipe.title} already in your account")
+                    messages.warning(request, f"{recipe.title} is already in your account")
         else:
             messages.warning(request, "Please select a recipe first")
 
@@ -124,7 +128,7 @@ def recipe_list(request):
             for recipe_id in selected_recipes:
                 recipe = Recipe.objects.get(pk=recipe_id)
                 recipe.delete()
-                messages.success(request, f"{recipe.title} deleted successfully")
+                messages.success(request, f"{recipe.title} was deleted successfully")
         else:
             messages.warning(request, "Please select a recipe first")
 
@@ -185,7 +189,7 @@ def user_recipes_list(request):
             for recipe_id in selected_recipes:
                 recipe = Recipe.objects.get(pk=recipe_id)
                 recipe.user.remove(user)
-                messages.success(request, f"{recipe.title} deleted successfully")
+                messages.success(request, f"{recipe.title} was deleted successfully")
         else:
             messages.warning(request, "Please select a recipe first")
 
@@ -216,7 +220,7 @@ def ingredient_list_view(request):
             for ingredient_id in selected_ingredients:
                 ingredient = Ingredient.objects.get(pk=ingredient_id)
                 ingredient.delete()
-                messages.success(request, f"{ingredient.name} deleted successfully")
+                messages.success(request, f"{ingredient.name} was deleted successfully")
         else:
             messages.warning(request, "Please select an ingredient first")
 
