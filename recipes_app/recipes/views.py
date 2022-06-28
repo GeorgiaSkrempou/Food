@@ -206,9 +206,9 @@ def user_recipes_list(request):
 @login_required
 def ingredient_list_view(request):
     ingredient_list = Ingredient.objects.order_by('name')
-    paginator = Paginator(ingredient_list, 10)
-    page_number = request.GET.get('page', 1)
-    page_obj = paginator.get_page(page_number)
+    # paginator = Paginator(ingredient_list, 10)
+    # page_number = request.GET.get('page', 1)
+    # page_obj = paginator.get_page(page_number)
 
     if request.POST.get('delete'):
         selected_ingredients = request.POST.getlist('recipe-checkbox')
@@ -222,12 +222,12 @@ def ingredient_list_view(request):
 
         return HttpResponseRedirect(reverse('recipes:list_ingredient'))
 
-    context = {'ingredient_list': ingredient_list,
-               'page_obj': page_obj,
-               'load_more_url': 'recipes:list_ingredient'}
+    context = {'ingredient_list': ingredient_list}
+               # 'page_obj': page_obj,
+               # 'load_more_url': 'recipes:list_ingredient'}
 
-    if request.htmx:
-        return render(request, template_name='recipes/ingredients_table.html', context=context)
+    # if request.htmx:
+    #     return render(request, template_name='recipes/ingredients_table.html', context=context)
     return render(request, template_name='recipes/ingredient_list.html', context=context)
 
 
