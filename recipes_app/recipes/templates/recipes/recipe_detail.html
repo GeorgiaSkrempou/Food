@@ -4,11 +4,6 @@
 {% block content_title %}
     <div class="d-flex justify-content-between">
         <h3 class="d-inline-block">{{ recipe.title }}</h3>
-
-        <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe"
-           class="text-decoration-none btn btn-primary">
-            <i class="bi bi-pen"></i>
-        </a>
     </div>
 
 {% endblock %}
@@ -31,11 +26,13 @@
     <table class="table recipe-detail" id="recipe-list">
         <tbody>
         <tr>
-            <th scope="row">Portions</th>
-            <td>{{ recipe.portions }}</td>
+            <th><span class="large-font">Portions</span> <span class="normal-font">{{ recipe.portions }}</span></th>
+        </tr>
+
+        <tr>
+            <th class="large-font">Ingredients</th>
         </tr>
         <tr>
-            <th scope="row">Ingredients</th>
             <td>
 
                 {% for ingredient_set in recipe.recipeingredient_set.all %}
@@ -56,22 +53,26 @@
         </tr>
 
         <tr>
-            <th scope="row">Steps</th>
-            <td colspan="2">{{ recipe.steps | safe }}</td>
+            <th class="large-font">Steps</th>
         </tr>
         <tr>
-            <th scope="row">Tags</th>
-            <td colspan="2">{{ recipe.filters }}</td>
+            <td>{{ recipe.steps | safe }}</td>
+        </tr>
+        <tr>
+            <th class="large-font">Tags</th>
+        </tr>
+        <tr>
+            <td>{{ recipe.filters }}</td>
         </tr>
 
         </tbody>
     </table>
-    <div id="pretty-table"></div>
+    <a href="{% url 'recipes:update_recipe' recipe.id %}" title="Edit recipe"
+       class="text-decoration-none btn btn-primary">
+        <i class="bi bi-pen"></i> Edit
+    </a>
 {% endblock %}
 
-{#{% block javascript %}#}
-{#    {% if  recipe_list %}#}
-{#        <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>#}
-{#        <script src="{% static 'recipes/app.js' %}"></script>#}
-{#    {% endif %}#}
-{#{% endblock %}#}
+{% block javascript %}
+
+{% endblock %}
