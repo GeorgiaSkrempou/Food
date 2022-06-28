@@ -34,14 +34,14 @@
                             <div class="mb-4">
                                 <label class="form-label requiredField">Ingredient*</label>
                                 {% if form.errors.ingredient %}
-                                    {{ form.ingredient|add_classes:"is-invalid mb-1" }}
+                                    {{ form.ingredient|add_classes:"is-invalid mb-1 text-dark form-control" }}
                                     {% for error in form.ingredient.errors %}
                                         <p class="invalid-feedback">
                                             <strong>{{ error }}</strong>
                                         </p>
                                     {% endfor %}
                                 {% else %}
-                                    {{ form.ingredient|add_classes:"mb-1" }}
+                                    {{ form.ingredient|add_classes:"mb-1 text-dark extra-form-control" }}
                                 {% endif %}
                             </div>
                         </div>

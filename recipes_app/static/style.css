@@ -114,13 +114,28 @@ body.text-light .form-control,
 body.text-light .input-group-text,
 body.text-light .list-group-item,
 body.text-light .modal-content,
-body.text-light .recipe-detail {
+body.text-light .recipe-detail,
+body.text-light .extra-form-control {
     background-color: inherit;
     color: inherit;
 }
 
-body.bg-dark .modal-content {
+body.bg-dark .modal-content,
+body.bg-dark .nice-select-dropdown,
+body.bg-dark .nice-select,
+body.bg-dark .nice-select .option.selected,
+body.bg-dark .nice-select .option.focus,
+body.bg-dark .nice-select .nice-select-search {
     background-color: #212529;
+    color: white!important;
+}
+
+body.bg-dark .nice-select-dropdown{
+    box-shadow: 0 0 0 1px #2d3338!important;
+}
+
+body.bg-dark .nice-select .option:hover {
+    background-color: #2d3338;
 }
 
 body.text-light td svg,
@@ -154,4 +169,16 @@ body.text-light .btn-edit-recipe svg {
 
 .is-invalid {
     border-color: #dc3545 !important;
+}
+
+.large-font {
+    font-size: large!important;
+}
+
+.normal-font {
+    font-weight: normal!important;
+}
+
+.extra-form-control {
+    border: 1px solid #ced4da!important;
 }
