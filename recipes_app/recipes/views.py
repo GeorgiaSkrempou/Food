@@ -1,17 +1,15 @@
 import random
-import time
 from datetime import datetime
 
 import pytz
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect, HttpResponseNotFound
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
 from .forms import RecipeForm, IngredientFormSet
 from .models import Recipe, Ingredient
@@ -227,8 +225,8 @@ def ingredient_list_view(request):
         return HttpResponseRedirect(reverse('recipes:list_ingredient'))
 
     context = {'ingredient_list': ingredient_list}
-               # 'page_obj': page_obj,
-               # 'load_more_url': 'recipes:list_ingredient'}
+    # 'page_obj': page_obj,
+    # 'load_more_url': 'recipes:list_ingredient'}
 
     # if request.htmx:
     #     return render(request, template_name='recipes/ingredients_table.html', context=context)
