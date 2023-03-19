@@ -28,6 +28,9 @@
         <tr>
             <th><span class="large-font">Portions</span> <span class="normal-font">{{ recipe.portions }}</span></th>
         </tr>
+        <tr>
+            <th><span class="large-font">Total calories</span> <span class="normal-font">{{ recipe.total_calories }}</span></th>
+        </tr>
 
         <tr>
             <th class="large-font">Ingredients</th>
@@ -39,7 +42,7 @@
 
                     <b>{{ ingredient_set.ingredient.name }}</b>
                     <br>
-                    {{ ingredient_set.quantity }} {{ ingredient_set.unit }}
+                    {{ ingredient_set.quantity }} {{ ingredient_set.unit }} ({{ingredient_set.calories}} kcal)
 
                     {% if ingredient_set.ingredient.contains %}
                         <br>

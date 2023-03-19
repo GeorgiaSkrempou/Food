@@ -41,6 +41,16 @@ class Recipe(models.Model):
         blank=False,
         through='RecipeIngredient'
     )
+    total_calories = models.IntegerField(null=True, blank=True)
+
+    def save(self):
+        total_cal = 0
+        for ingredient in self.ingredients.all():
+            recipe_ingredient = RecipeIngredient.objects.get(recipe=self, ingredient=ingredient)
+            if recipe_ingredient.calories:
+                total_cal += recipe_ingredient.calories
+        self.total_calories = total_cal
+        return super().save()
 
     class Meta:
         verbose_name = 'Recipe'
@@ -54,9 +64,12 @@ class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     quantity = models.FloatField(blank=False, null=True)
     unit = models.CharField(max_length=30, blank=False, null=True)
+    calories = models.IntegerField(null=True, blank=False)
 
     class Meta:
         verbose_name = 'Recipe_ingredient'
+        unique_together = ('recipe', 'ingredient')
+
 
     def __str__(self):
         return f"{self.recipe.title} - {self.ingredient.name}"

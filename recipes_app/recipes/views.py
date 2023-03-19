@@ -74,12 +74,14 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         context = self.get_context_data()
         ingredient = context['recipe_ingredient']
         self.object = form.save()
+
         if ingredient.is_valid():
             ingredient.instance = self.object
             ingredient.save()
         else:
             messages.error(self.request, "Please fill in the ingredients form correctly")
             return self.render_to_response(self.get_context_data(form=form))
+        
         return super().form_valid(form)
 
     def get_success_url(self):
