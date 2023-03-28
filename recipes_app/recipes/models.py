@@ -44,6 +44,7 @@ class Recipe(models.Model):
     total_calories = models.IntegerField(null=True, blank=True)
 
     def save(self):
+        super().save()
         total_cal = 0
         for ingredient in self.ingredients.all():
             recipe_ingredient = RecipeIngredient.objects.get(recipe=self, ingredient=ingredient)
