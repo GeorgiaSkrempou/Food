@@ -29,7 +29,7 @@ SECRET_KEY = os.environ['DJANGO_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['DEBUG']
 
-ALLOWED_HOSTS = ['foodie.sbs.lol', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['foodie.lucelle.lol', '127.0.0.1', 'localhost']
 
 AUTH_USER_MODEL = 'user.Account'
 
@@ -136,7 +136,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['https://foodie.sbs.lol']
+CSRF_TRUSTED_ORIGINS = ['https://foodie.lucelle.lol']
 
 LOGIN_REDIRECT_URL = 'recipes:home'
 LOGOUT_URL = 'recipes:home'
